@@ -14,7 +14,6 @@ void Game::Run()
 	float dt;
 	float frameTime;
 	float currentTime = clock.getElapsedTime().asSeconds();
-	float accumulator = 0.f;
 	float fps;
 	while (gameData->window.isOpen())
 	{
@@ -29,7 +28,7 @@ void Game::Run()
 		gameData->machine.ProcessStateChanges();
 		frameTime = clock.restart().asSeconds();
 		fps = 1.f / frameTime;
-		dt = 1.f / fps;
+		dt = frameTime / fps;
 		while (fps > 0)
 		{
 			gameData->machine.GetActiveState()->HandleInput();
