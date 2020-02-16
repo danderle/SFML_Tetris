@@ -1,4 +1,5 @@
 #include "MainMenuState.h"
+#include "GameState.h"
 
 MainMenuState::MainMenuState(std::shared_ptr<GameData> _gameData)
 	:
@@ -18,7 +19,13 @@ void MainMenuState::Init()
 
 void MainMenuState::HandleInput()
 {
-	playButton.MouseHover(gameData->input.GetMousePosition(gameData->window));
+	bool isHovering = gameData->input.IsHovering(playButton.GetRect(), gameData->window);
+	playButton.MouseHover(isHovering);
+	bool isClicked = gameData->input.IsRectClicked(playButton.GetRect, sf::Mouse::Left, gameData->window);
+	if (isClicked)
+	{
+		gameData->machine.AddState(std::make_unique<GameState>(gameData));
+	}
 }
 
 void MainMenuState::Update(float dt)
