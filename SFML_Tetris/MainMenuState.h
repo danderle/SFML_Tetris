@@ -1,7 +1,7 @@
 #pragma once
 #include "Game.h"
 #include "State.h"
-
+#include "Button.h"
 class MainMenuState : public State
 {
 public:
@@ -15,5 +15,6 @@ public:
 
 private:
 	std::shared_ptr<GameData> gameData;
+	Button playButton;
 };
 
