@@ -10,6 +10,7 @@ public:
 	Button(sf::Vector2f size, sf::Vector2f position, const sf::Color backColor = sf::Color::Green);
 	Button(std::string content, const sf::Color backColor = sf::Color::Green);
 
+	const sf::FloatRect GetRect() const;
 	void SetFont(const sf::Font& font);
 	void SetContent(const std::string& content);
 	void SetPosition(const sf::Vector2f position);
@@ -17,7 +18,7 @@ public:
 	void SetBackColor(const sf::Color backColor);
 	void CenterText();
 	void Draw(sf::RenderWindow& wnd);
-	void MouseHover(const sf::Vector2i msePosition);
+	void MouseHover(const bool mouseIsHovering);
 
 private:
 	sf::RectangleShape shape;

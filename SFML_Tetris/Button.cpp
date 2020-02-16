@@ -24,6 +24,11 @@ Button::Button(const std::string content, const sf::Color backColor)
 	SetContent(content);
 }
 
+const sf::FloatRect Button::GetRect() const
+{
+	return shape.getGlobalBounds();
+}
+
 void Button::SetFont(const sf::Font& font)
 {
 	text.setFont(font);
@@ -76,14 +81,16 @@ void Button::Draw(sf::RenderWindow& wnd)
 	}
 }
 
-void Button::MouseHover(const sf::Vector2i msePosition)
+void Button::MouseHover(const bool mouseIsHovering)
 {
-	if (shape.getGlobalBounds().contains({ (float)msePosition.x, (float)msePosition.y }))
+	if (mouseIsHovering)
 	{
 		shape.setFillColor(sf::Color::Transparent);
+		shape.setFillColor(color);
 	}
 	else
 	{
 		shape.setFillColor(color);
+		text.setFillColor(sf::Color::Black);
 	}
 }
