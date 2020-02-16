@@ -7,7 +7,8 @@ public:
 	InputManager() = default;
 	~InputManager() = default;
 
-	bool IsSpriteClicked(sf::Sprite sprite, sf::Mouse::Button button, sf::RenderWindow& window);
+	bool IsRectClicked(sf::Rect<float> rect, sf::Mouse::Button buttonPressed, sf::RenderWindow& window);
+	bool IsHovering(sf::Rect<float> rect, sf::RenderWindow& window);
 	sf::Vector2i GetMousePosition(sf::RenderWindow& window);
 };
 
