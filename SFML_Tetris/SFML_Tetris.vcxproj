@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\States;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\GameStateMachine;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\States;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\GameStateMachine;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,27 +144,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="GameStateMachine\AssetManager.cpp" />
+    <ClCompile Include="GameStateMachine\Game.cpp" />
+    <ClCompile Include="GameStateMachine\InputManager.cpp" />
+    <ClCompile Include="GameStateMachine\StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MainMenuState.cpp" />
-    <ClCompile Include="SplashState.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="States\GameState.cpp" />
+    <ClCompile Include="States\MainMenuState.cpp" />
+    <ClCompile Include="States\SplashState.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="DEFINITIONS.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="MainMenuState.h" />
-    <ClInclude Include="SplashState.h" />
-    <ClInclude Include="State.h" />
-    <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="GameStateMachine\AssetManager.h" />
+    <ClInclude Include="GameStateMachine\Game.h" />
+    <ClInclude Include="GameStateMachine\InputManager.h" />
+    <ClInclude Include="GameStateMachine\State.h" />
+    <ClInclude Include="GameStateMachine\StateMachine.h" />
+    <ClInclude Include="States\GameState.h" />
+    <ClInclude Include="States\MainMenuState.h" />
+    <ClInclude Include="States\SplashState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
