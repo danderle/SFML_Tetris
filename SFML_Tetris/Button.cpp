@@ -86,7 +86,7 @@ void Button::MouseHover(const bool mouseIsHovering)
 	if (mouseIsHovering)
 	{
 		shape.setFillColor(sf::Color::Transparent);
-		shape.setFillColor(color);
+		text.setFillColor(color);
 	}
 	else
 	{
