@@ -9,6 +9,7 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 
 void GameState::Init()
 {
+	tetrimino = std::make_unique<Tetrimino>();
 }
 
 void GameState::HandleInput()
@@ -17,6 +18,13 @@ void GameState::HandleInput()
 
 void GameState::Update(float dt)
 {
+	timePassed += dt;
+	if (timePassed > moveTime)
+	{
+		timePassed = 0;
+		tetrimino->MoveDown();
+		field.ShowOnField(*tetrimino);
+	}
 }
 
 void GameState::Draw()
