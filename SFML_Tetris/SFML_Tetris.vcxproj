@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameStateMachine\AssetManager.cpp" />
     <ClCompile Include="GameStateMachine\Game.cpp" />
@@ -154,9 +155,11 @@
     <ClCompile Include="States\GameState.cpp" />
     <ClCompile Include="States\MainMenuState.cpp" />
     <ClCompile Include="States\SplashState.cpp" />
+    <ClCompile Include="Tetrimino.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="DEFINITIONS.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameStateMachine\AssetManager.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="States\GameState.h" />
     <ClInclude Include="States\MainMenuState.h" />
     <ClInclude Include="States\SplashState.h" />
+    <ClInclude Include="Tetrimino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
