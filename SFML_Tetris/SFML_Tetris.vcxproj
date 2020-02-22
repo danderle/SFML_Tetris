@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameStateMachine\AssetManager.cpp" />
     <ClCompile Include="GameStateMachine\Game.cpp" />
     <ClCompile Include="GameStateMachine\InputManager.cpp" />
@@ -157,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="DEFINITIONS.h" />
+    <ClInclude Include="Field.h" />
     <ClInclude Include="GameStateMachine\AssetManager.h" />
     <ClInclude Include="GameStateMachine\Game.h" />
     <ClInclude Include="GameStateMachine\InputManager.h" />
