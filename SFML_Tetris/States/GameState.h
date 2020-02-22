@@ -1,6 +1,7 @@
 #pragma once
 #include "Game.h"
 #include "State.h"
+#include "Field.h"
 
 class GameState : public State
 {
@@ -13,5 +14,7 @@ public:
 	void Draw();
 
 private:
+	std::shared_ptr<GameData> gameData;
+	Field field;
 };
 
