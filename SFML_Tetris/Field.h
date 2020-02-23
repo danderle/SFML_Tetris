@@ -10,12 +10,12 @@ public:
 	Field() = delete;
 	Field(const sf::Vector2f _position);
 
-	void ShowOnField(const Tetrimino& tetrimino);
+	void ShowOnField(Tetrimino& tetrimino);
 	void Draw(sf::RenderWindow& wnd);
 	
 private:
 	void PlaceOnField(const std::vector<int>& lastPosition, const sf::Color color);
-	const std::vector<int>& ClearFieldAndSaveLastPosition(int lastPosition);
+	const std::vector<int> ClearFieldAndSaveLastPosition(int lastPosition);
 
 private:
 	sf::Vector2f position;

@@ -15,11 +15,11 @@ Field::Field(const sf::Vector2f _position)
 	}
 }
 
-void Field::ShowOnField(const Tetrimino& tetrimino)
+void Field::ShowOnField(Tetrimino& tetrimino)
 {
 	int row = tetrimino.GetRow();
 	int column = tetrimino.GetColumn();
-	int index = Field::width * row + column;
+	unsigned int index = Field::width * row + column;
 	sf::Color color = tetrimino.GetColor();
 	auto tetriLastPos = ClearFieldAndSaveLastPosition(index);
 
@@ -31,7 +31,7 @@ void Field::ShowOnField(const Tetrimino& tetrimino)
 		{
 			if (tetriCol)
 			{
-				if (!cells[index].IsOccupied() || index <  cells.size())
+				if (index < cells.size() && !cells[index].IsOccupied() )
 				{
 					cells[index].SetColor(color);
 				}
@@ -49,6 +49,7 @@ void Field::ShowOnField(const Tetrimino& tetrimino)
 	if (placeTetriInField)
 	{
 		PlaceOnField(tetriLastPos, color);
+		tetrimino.PlacedOnField();
 	}
 }
 
@@ -69,14 +70,14 @@ void Field::PlaceOnField(const std::vector<int>& lastPosition, const sf::Color c
 	}
 }
 
-const std::vector<int>& Field::ClearFieldAndSaveLastPosition(int index)
+const std::vector<int> Field::ClearFieldAndSaveLastPosition(int index)
 {
 	std::vector<int> tetriLastPos;
 	for (int cell = 0; cell < index; cell++)
 	{
 		if (!cells[cell].IsOccupied())
 		{
-			if (cells[cell].GetColor() == sf::Color::Red)
+			if (cells[cell].GetColor() != sf::Color::Red)
 			{
 				tetriLastPos.push_back(cell);
 			}
