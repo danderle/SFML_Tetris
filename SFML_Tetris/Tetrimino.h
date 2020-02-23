@@ -1,41 +1,27 @@
 #pragma once
+#include "SFML/Graphics.hpp"
+#include <vector>
 
 class Tetrimino
 {
 public:
-	Tetrimino()
-	{
-	}
+	Tetrimino() = delete;
+	Tetrimino(std::vector<std::vector<bool>> type, sf::Color _color);
 
-	void MoveDown()
-	{
-		rowPos += 1;
-	}
-	int GetRow() const
-	{
-		return rowPos;
-	}
-	int GetColumn() const
-	{
-		return colPos;
-	}
-	std::vector<std::vector<bool> > GetPosition() const
-	{
-		return cube;
-	}
-	sf::Color GetColor() const
-	{
-		return color;
-	}
-	void GetNext()
-	{
+	void MoveDown();
+	int GetRow() const;
+	int GetColumn() const;
+	std::vector<std::vector<bool> > GetPosition() const;
+	sf::Color GetColor() const;
+	void PlacedOnField();
+	const bool IsPlacedOnField() const;
+	
 
-	}
 private:
-	int rowPos = 0;
-	int colPos = 5;
-	std::vector<std::vector<bool> > cube = { {true ,true}, 
-											{true ,true} };
-	sf::Color color = sf::Color::Blue;
+	int rowPos;
+	int colPos;
+	std::vector<std::vector<bool>> tetri;
+	sf::Color color;
+	bool isPlacedOnField = false;
 };
 
