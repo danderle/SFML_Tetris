@@ -9,7 +9,8 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 
 void GameState::Init()
 {
-	tetrimino = std::make_unique<Tetrimino>();
+	tetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
+	nextTetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
 }
 
 void GameState::HandleInput()
@@ -24,6 +25,11 @@ void GameState::Update(float dt)
 		timePassed = 0;
 		tetrimino->MoveDown();
 		field.ShowOnField(*tetrimino);
+		if (tetrimino->IsPlacedOnField())
+		{
+			tetrimino = std::move(nextTetrimino);
+			nextTetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
+		}
 	}
 }
 
