@@ -14,6 +14,18 @@ void Tetrimino::MoveDown()
 	rowPos += 1;
 }
 
+void Tetrimino::MoveLeft()
+{
+	colPos -= 1;
+	colPos = colPos >= 0 ? colPos : 0;
+}
+
+void Tetrimino::MoveRight()
+{
+	colPos += 1;
+	colPos = (colPos + tetri.size()) < 10 ? colPos : 10 - tetri.size();
+}
+
 int Tetrimino::GetRow() const
 {
 	return rowPos;

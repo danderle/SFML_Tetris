@@ -9,6 +9,8 @@ public:
 	Tetrimino(std::vector<std::vector<bool>> type, sf::Color _color);
 
 	void MoveDown();
+	void MoveLeft();
+	void MoveRight();
 	int GetRow() const;
 	int GetColumn() const;
 	std::vector<std::vector<bool> > GetPosition() const;
@@ -23,5 +25,6 @@ private:
 	std::vector<std::vector<bool>> tetri;
 	sf::Color color;
 	bool isPlacedOnField = false;
+	static constexpr int maxColumns = 10;
 };
 
