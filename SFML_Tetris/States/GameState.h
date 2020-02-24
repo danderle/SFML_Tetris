@@ -18,8 +18,10 @@ private:
 	Field field;
 	std::unique_ptr<Tetrimino> tetrimino;
 	std::unique_ptr<Tetrimino> nextTetrimino;
-	float timePassed = 0;
-	static constexpr float moveTime = 0.5f;
+	float autoTimePassed = 0;
+	float manualTimePassed = 0;
+	static constexpr float autoMoveTime = 0.5f;
+	static constexpr float manualMoveTime = 0.1f;
 	std::vector<std::vector<bool> > tetri = { {true ,true},
 											  {true ,true} };
 };

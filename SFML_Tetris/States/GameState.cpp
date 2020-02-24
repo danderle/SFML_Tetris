@@ -15,21 +15,54 @@ void GameState::Init()
 
 void GameState::HandleInput()
 {
+	if (manualTimePassed > manualMoveTime)
+	{
+		if (gameData->input.KeyHit(sf::Keyboard::Key::Left))
+		{
+			manualTimePassed = 0;
+			if (field.CanMoveLeft(*tetrimino))
+			{
+				tetrimino->MoveLeft();
+			}
+		}
+		if (gameData->input.KeyHit(sf::Keyboard::Key::Right))
+		{
+			manualTimePassed = 0;
+			if (field.CanMoveRight(*tetrimino))
+			{
+				tetrimino->MoveRight();
+			}
+		}
+		if (gameData->input.KeyHit(sf::Keyboard::Key::Down))
+		{
+			manualTimePassed = 0;
+			tetrimino->MoveDown();
+		}
+		if (gameData->input.KeyHit(sf::Keyboard::Key::A))
+		{
+
+		}
+		else if (gameData->input.KeyHit(sf::Keyboard::Key::D))
+		{
+
+		}
+	}
 }
 
 void GameState::Update(float dt)
 {
-	timePassed += dt;
-	if (timePassed > moveTime)
+	manualTimePassed += dt;
+	autoTimePassed += dt;
+	if (autoTimePassed > autoMoveTime)
 	{
-		timePassed = 0;
+		autoTimePassed = 0;
 		tetrimino->MoveDown();
-		field.ShowOnField(*tetrimino);
-		if (tetrimino->IsPlacedOnField())
-		{
-			tetrimino = std::move(nextTetrimino);
-			nextTetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
-		}
+	}
+	field.ShowOnField(*tetrimino);
+	if (tetrimino->IsPlacedOnField())
+	{
+		tetrimino = std::move(nextTetrimino);
+		nextTetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
 	}
 }
 
