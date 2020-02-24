@@ -24,3 +24,8 @@ sf::Vector2i InputManager::GetMousePosition(sf::RenderWindow& window)
 {
 	return sf::Mouse::getPosition(window);
 }
+
+bool InputManager::KeyHit(sf::Keyboard::Key key) const
+{
+	return sf::Keyboard::isKeyPressed(key);
+}
