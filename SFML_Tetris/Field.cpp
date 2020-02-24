@@ -21,10 +21,10 @@ void Field::ShowOnField(Tetrimino& tetrimino)
 	int column = tetrimino.GetColumn();
 	unsigned int index = Field::width * row + column;
 	sf::Color color = tetrimino.GetColor();
-	auto tetriLastPos = ClearFieldAndSaveLastPosition(index);
+	auto tetriLastPos = ClearFieldAndSaveLastPosition();
 
-	auto tetri = tetrimino.GetPosition();
 	bool placeTetriInField = false;
+	auto tetri = tetrimino.GetPosition();
 	for (auto tetriRow : tetri)
 	{
 		for (auto tetriCol : tetriRow)
@@ -53,6 +53,34 @@ void Field::ShowOnField(Tetrimino& tetrimino)
 	}
 }
 
+const bool Field::CanMoveLeft(const Tetrimino& tetrimino) const
+{
+	bool canMove = true;
+	int row = tetrimino.GetRow();
+	int column = tetrimino.GetColumn() - 1;
+	if (column < 0)
+	{
+		canMove = false;
+		return canMove;
+	}
+	canMove = NextMoveFree(row, column, tetrimino);
+	return canMove;
+}
+
+const bool Field::CanMoveRight(const Tetrimino& tetrimino) const
+{
+	bool canMove = true;
+	int row = tetrimino.GetRow();
+	int column = tetrimino.GetColumn() + 1;
+	if (column < 0)
+	{
+		canMove = false;
+		return canMove;
+	}
+	canMove = NextMoveFree(row, column, tetrimino);
+	return canMove;
+}
+
 void Field::Draw(sf::RenderWindow& wnd)
 {
 	for (auto cell : cells)
@@ -70,10 +98,10 @@ void Field::PlaceOnField(const std::vector<int>& lastPosition, const sf::Color c
 	}
 }
 
-const std::vector<int> Field::ClearFieldAndSaveLastPosition(int index)
+const std::vector<int> Field::ClearFieldAndSaveLastPosition()
 {
 	std::vector<int> tetriLastPos;
-	for (int cell = 0; cell < index; cell++)
+	for (int cell = 0; cell < cells.size(); cell++)
 	{
 		if (!cells[cell].IsOccupied())
 		{
@@ -85,4 +113,29 @@ const std::vector<int> Field::ClearFieldAndSaveLastPosition(int index)
 		}
 	}
 	return tetriLastPos;
+}
+
+const bool Field::NextMoveFree(int row, int column, const Tetrimino& tetrimino) const
+{
+	bool canMove = true;
+	unsigned int index = Field::width * row + column;
+	auto tetri = tetrimino.GetPosition();
+	for (auto tetriRow : tetri)
+	{
+		for (auto tetriCol : tetriRow)
+		{
+			if (tetriCol)
+			{
+				if (cells[index].IsOccupied())
+				{
+					canMove = false;
+					break;
+				}
+			}
+			index++;
+		}
+		row++;
+		index = Field::width * row + column;
+	}
+	return canMove;
 }
