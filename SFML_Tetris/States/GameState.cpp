@@ -36,7 +36,9 @@ void GameState::HandleInput()
 		if (gameData->input.KeyHit(sf::Keyboard::Key::Down))
 		{
 			manualTimePassed = 0;
-			tetrimino->MoveDown();
+			autoTimePassed = 0;
+			MoveDownOrPlaceOnField();
+
 		}
 		if (gameData->input.KeyHit(sf::Keyboard::Key::A))
 		{
@@ -56,14 +58,9 @@ void GameState::Update(float dt)
 	if (autoTimePassed > autoMoveTime)
 	{
 		autoTimePassed = 0;
-		tetrimino->MoveDown();
+		MoveDownOrPlaceOnField();
 	}
 	field.ShowOnField(*tetrimino);
-	if (tetrimino->IsPlacedOnField())
-	{
-		tetrimino = std::move(nextTetrimino);
-		nextTetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
-	}
 }
 
 void GameState::Draw()
@@ -71,4 +68,22 @@ void GameState::Draw()
 	gameData->window.clear();
 	field.Draw(gameData->window);
 	gameData->window.display();
+}
+
+
+//// **** Private Functions ****
+
+void GameState::MoveDownOrPlaceOnField()
+{
+	if (field.CanMoveDown(*tetrimino))
+	{
+		tetrimino->MoveDown();
+	}
+	else
+	{
+		field.ClearFieldAndSaveLastPosition();
+		field.PlaceLastPositionOnField(tetrimino->GetColor());
+		tetrimino = std::move(nextTetrimino);
+		nextTetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
+	}
 }

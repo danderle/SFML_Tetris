@@ -14,6 +14,9 @@ public:
 	void Draw();
 
 private:
+	void MoveDownOrPlaceOnField();
+
+private:
 	std::shared_ptr<GameData> gameData;
 	Field field;
 	std::unique_ptr<Tetrimino> tetrimino;
