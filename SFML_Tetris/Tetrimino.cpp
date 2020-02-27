@@ -5,8 +5,15 @@ Tetrimino::Tetrimino(std::vector<std::vector<bool>> type, sf::Color _color)
 	tetri(type),
 	color(_color),
 	rowPos(0),
-	colPos(5)
+	colPos(5),
+	rng(rnd()),
+	colorIndex(0, 5),
+	typeIndex(0,6)
 {
+	int index = colorIndex(rng);
+	color = colors[index];
+	index = typeIndex(rng);
+	tetri = types[index];
 }
 
 void Tetrimino::MoveDown()
@@ -36,6 +43,16 @@ int Tetrimino::GetColumn() const
 	return colPos;
 }
 
+int Tetrimino::GetWidth() const
+{
+	return tetri[0].size();
+}
+
+int Tetrimino::GetHeight() const
+{
+	return tetri.size();
+}
+
 std::vector<std::vector<bool>> Tetrimino::GetPosition() const
 {
 	return tetri;
@@ -44,14 +61,4 @@ std::vector<std::vector<bool>> Tetrimino::GetPosition() const
 sf::Color Tetrimino::GetColor() const
 {
 	return color;
-}
-
-void Tetrimino::PlacedOnField()
-{
-	isPlacedOnField = true;
-}
-
-const bool Tetrimino::IsPlacedOnField() const
-{
-	return isPlacedOnField;
 }
