@@ -1,5 +1,8 @@
 #include "GameState.h"
 
+//// initialize TetriminoFactory one time
+TetriminoFactory GameState::factory;
+
 GameState::GameState(std::shared_ptr<GameData> _gameData)
 	:
 	gameData(_gameData),
@@ -9,8 +12,8 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 
 void GameState::Init()
 {
-	tetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
-	nextTetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
+	tetrimino = factory.CreateTetrimino();
+	nextTetrimino = factory.CreateTetrimino();
 }
 
 void GameState::HandleInput()
@@ -84,6 +87,6 @@ void GameState::MoveDownOrPlaceOnField()
 		field.ClearFieldAndSaveLastPosition();
 		field.PlaceLastPositionOnField(tetrimino->GetColor());
 		tetrimino = std::move(nextTetrimino);
-		nextTetrimino = std::make_unique<Tetrimino>(tetri, sf::Color::Blue);
+		nextTetrimino = factory.CreateTetrimino();
 	}
 }

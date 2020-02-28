@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "State.h"
 #include "Field.h"
+#include "TetriminoFactory.h"
 
 class GameState : public State
 {
@@ -17,6 +18,7 @@ private:
 	void MoveDownOrPlaceOnField();
 
 private:
+	static TetriminoFactory factory;
 	std::shared_ptr<GameData> gameData;
 	Field field;
 	std::unique_ptr<Tetrimino> tetrimino;
@@ -28,4 +30,3 @@ private:
 	std::vector<std::vector<bool> > tetri = { {true ,true},
 											  {true ,true} };
 };
-
