@@ -1,19 +1,13 @@
 #include "Tetrimino.h"
 
-Tetrimino::Tetrimino(std::vector<std::vector<bool>> type, sf::Color _color)
+Tetrimino::Tetrimino(std::vector<std::vector<bool>> _type, sf::Color _color)
 	:
-	tetri(type),
+	type(_type),
 	color(_color),
 	rowPos(0),
-	colPos(5),
-	rng(rnd()),
-	colorIndex(0, 5),
-	typeIndex(0,6)
+	colPos(5)
 {
-	int index = colorIndex(rng);
-	color = colors[index];
-	index = typeIndex(rng);
-	tetri = types[index];
+	
 }
 
 void Tetrimino::MoveDown()
@@ -30,7 +24,7 @@ void Tetrimino::MoveLeft()
 void Tetrimino::MoveRight()
 {
 	colPos += 1;
-	colPos = (colPos + tetri.size()) < 10 ? colPos : 10 - tetri.size();
+	colPos = (colPos + type.size()) < 10 ? colPos : 10 - type.size();
 }
 
 int Tetrimino::GetRow() const
@@ -45,17 +39,17 @@ int Tetrimino::GetColumn() const
 
 int Tetrimino::GetWidth() const
 {
-	return tetri[0].size();
+	return type[0].size();
 }
 
 int Tetrimino::GetHeight() const
 {
-	return tetri.size();
+	return type.size();
 }
 
 std::vector<std::vector<bool>> Tetrimino::GetPosition() const
 {
-	return tetri;
+	return type;
 }
 
 sf::Color Tetrimino::GetColor() const
