@@ -6,7 +6,7 @@ TetriminoFactory GameState::factory;
 GameState::GameState(std::shared_ptr<GameData> _gameData)
 	:
 	gameData(_gameData),
-	field({0,0})
+	field({30,0})
 {
 }
 
@@ -43,13 +43,25 @@ void GameState::HandleInput()
 			MoveDownOrPlaceOnField();
 
 		}
-		if (gameData->input.KeyHit(sf::Keyboard::Key::A))
-		{
+	}
+}
 
+void GameState::HandleInput(sf::Event event)
+{
+	if (event.key.code == sf::Keyboard::A)
+	{
+		tetrimino->RotateLeft();
+		if (!field.CanRotateLeft(*tetrimino))
+		{
+			tetrimino->RotateRight();
 		}
-		else if (gameData->input.KeyHit(sf::Keyboard::Key::D))
+	}
+	else if (event.key.code == sf::Keyboard::D)
+	{
+		tetrimino->RotateRight();
+		if (!field.CanRotateLeft(*tetrimino))
 		{
-
+			tetrimino->RotateLeft();
 		}
 	}
 }
