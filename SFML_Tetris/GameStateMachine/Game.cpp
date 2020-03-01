@@ -24,6 +24,10 @@ void Game::Run()
 			{
 				gameData->window.close();
 			}
+			if (event.type == sf::Event::KeyReleased)
+			{
+				gameData->machine.GetActiveState()->HandleInput(event);
+			}
 		}
 		gameData->machine.ProcessStateChanges();
 		frameTime = clock.restart().asSeconds();
