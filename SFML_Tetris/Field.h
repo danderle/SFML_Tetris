@@ -14,6 +14,7 @@ public:
 	const bool CanMoveLeft(const Tetrimino& tetrimino) const;
 	const bool CanMoveRight(const Tetrimino& tetrimino) const;
 	const bool CanMoveDown(const Tetrimino& tetrimino) const;
+	const bool CanRotate(Tetrimino& tetrimino) const;
 	void ClearFieldAndSaveLastPosition();
 	void PlaceLastPositionOnField(const sf::Color tetriminoColor);
 	void Draw(sf::RenderWindow& wnd);
@@ -24,9 +25,11 @@ private:
 
 private:
 	sf::Vector2f position;
+	sf::RectangleShape frame;
 	std::vector<Cell> cells;
 	std::vector<int> lastPosition;
 	static constexpr int width = 10;
 	static constexpr int height = 24;
+	const sf::Color background = sf::Color::Transparent;
 };
 

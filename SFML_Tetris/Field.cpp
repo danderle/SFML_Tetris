@@ -1,8 +1,14 @@
 #include "Field.h"
 
 Field::Field(const sf::Vector2f _position)
-	:position(_position)
+	:
+	position(_position),
+	frame({width * Cell::Dimensions, height * Cell::Dimensions})
 {
+	frame.setPosition(position);
+	frame.setFillColor(sf::Color::Transparent);
+	frame.setOutlineColor(sf::Color(200, 200, 200));
+	frame.setOutlineThickness(20);
 	int vectorSize = width * height;
 	for (int cell = 0; cell < vectorSize; cell++)
 	{
@@ -61,7 +67,7 @@ const bool Field::CanMoveRight(const Tetrimino& tetrimino) const
 	bool canMove = true;
 	int row = tetrimino.GetRow();
 	int column = tetrimino.GetColumn() + 1;
-	int tetriWidth = tetrimino.GetWidth()-1;
+	int tetriWidth = tetrimino.GetWidth();
 	if (!(column + tetriWidth < width))
 	{
 		canMove = false;
@@ -76,7 +82,31 @@ const bool Field::CanMoveDown(const Tetrimino& tetrimino) const
 	bool canMove = true;
 	int row = tetrimino.GetRow() + 1;
 	int column = tetrimino.GetColumn();
-	int tetriheight = tetrimino.GetHeight()-1;
+	int tetriheight = tetrimino.GetHeight();
+	if (!(row + tetriheight < height))
+	{
+		canMove = false;
+		return canMove;
+	}
+	canMove = NextMoveFree(row, column, tetrimino);
+	return canMove;
+}
+
+const bool Field::CanRotate(Tetrimino& tetrimino) const
+{
+	bool canMove = true;
+	int row = tetrimino.GetRow();
+	int column = tetrimino.GetColumn();
+	int tetriheight = tetrimino.GetHeight();
+	int tetriWidth = tetrimino.GetWidth();
+	if (!(column + tetriWidth < width))
+	{
+		while (column + tetriWidth >= width)
+		{
+			tetrimino.MoveLeft();
+			column--;
+		}
+	}
 	if (!(row + tetriheight < height))
 	{
 		canMove = false;
@@ -92,6 +122,7 @@ void Field::Draw(sf::RenderWindow& wnd)
 	{
 		wnd.draw(cell.GetShape());
 	}
+	wnd.draw(frame);
 }
 
 void Field::PlaceLastPositionOnField(const sf::Color tetriminoColor)
@@ -110,11 +141,11 @@ void Field::ClearFieldAndSaveLastPosition()
 	{
 		if (!cells[cell].IsOccupied())
 		{
-			if (cells[cell].GetColor() != sf::Color::Red)
+			if (cells[cell].GetColor() != background)
 			{
 				tetriLastPos.push_back(cell);
 			}
-			cells[cell].SetColor(sf::Color::Red);
+			cells[cell].SetColor(background);
 		}
 	}
 	lastPosition = tetriLastPos;
@@ -129,7 +160,7 @@ void Field::ClearField()
 	{
 		if (!cells[cell].IsOccupied())
 		{
-			cells[cell].SetColor(sf::Color::Red);
+			cells[cell].SetColor(background);
 		}
 	}
 }
