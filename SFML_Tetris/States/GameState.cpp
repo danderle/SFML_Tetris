@@ -51,7 +51,7 @@ void GameState::HandleInput(sf::Event event)
 	if (event.key.code == sf::Keyboard::A)
 	{
 		tetrimino->RotateLeft();
-		if (!field.CanRotateLeft(*tetrimino))
+		if (!field.CanRotate(*tetrimino))
 		{
 			tetrimino->RotateRight();
 		}
@@ -59,7 +59,7 @@ void GameState::HandleInput(sf::Event event)
 	else if (event.key.code == sf::Keyboard::D)
 	{
 		tetrimino->RotateRight();
-		if (!field.CanRotateLeft(*tetrimino))
+		if (!field.CanRotate(*tetrimino))
 		{
 			tetrimino->RotateLeft();
 		}
