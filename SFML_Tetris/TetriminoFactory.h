@@ -28,8 +28,7 @@ private:
 	const std::vector<std::vector<bool>> Otetri = { {true, true},
 													{true, true} };
 
-	const std::vector<std::vector<bool>> Itetri = { {true,  true,  true,  true},
-													{false, false, false, false} };
+	const std::vector<std::vector<bool>> Itetri = { {true,  true,  true,  true} };
 
 	const std::vector<std::vector<bool>> Jtetri = { {true, false, false},
 													{true, true,  true} };
