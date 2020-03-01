@@ -12,6 +12,8 @@ public:
 	void MoveDown();
 	void MoveLeft();
 	void MoveRight();
+	void RotateLeft();
+	void RotateRight();
 	int GetRow() const;
 	int GetColumn() const;
 	int GetWidth() const;
@@ -24,6 +26,5 @@ private:
 	int colPos;
 	std::vector<std::vector<bool>> type;
 	sf::Color color;
-	static constexpr int maxColumns = 10;
 };
 
