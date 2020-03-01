@@ -28,6 +28,10 @@ void MainMenuState::HandleInput()
 	}
 }
 
+void MainMenuState::HandleInput(sf::Event event)
+{
+}
+
 void MainMenuState::Update(float dt)
 {
 }

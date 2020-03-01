@@ -21,6 +21,10 @@ void SplashState::HandleInput()
 {
 }
 
+void SplashState::HandleInput(sf::Event event)
+{
+}
+
 void SplashState::Update(float dt)
 {
 	timePassed += dt;
