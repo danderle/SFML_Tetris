@@ -9,6 +9,19 @@ Cell::Cell(const float xPos, const float yPos)
 	shape.setOutlineColor(outlineColor);
 }
 
+Cell::Cell(const Cell& src)
+{
+	*this = src;
+}
+
+Cell& Cell::operator=(const Cell& src)
+{
+	shape = sf::RectangleShape(src.shape);
+	occupied = src.occupied;
+
+	return *this;
+}
+
 void Cell::SetColor(sf::Color color)
 {
 	shape.setFillColor(color);

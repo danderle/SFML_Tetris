@@ -6,7 +6,9 @@ class Cell
 public:
 	Cell() = delete;
 	Cell(const float xPos, const float yPos);
-	
+	Cell(const Cell& src);
+	Cell& operator=(const Cell& src);
+
 	void SetColor(sf::Color color);
 	const sf::Color GetColor() const;
 	void Occupied();
@@ -19,7 +21,9 @@ public:
 private:
 	sf::RectangleShape shape;
 	bool occupied = false;
-	static constexpr int outLineThick = -1;
+	
 	const sf::Color outlineColor = sf::Color::Black;
+	
+	static constexpr int outLineThick = -1;
 };
 
