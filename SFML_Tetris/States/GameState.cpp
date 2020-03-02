@@ -40,7 +40,7 @@ void GameState::HandleInput()
 		{
 			manualTimePassed = 0;
 			autoTimePassed = 0;
-			MoveDownOrPlaceOnField();
+			MoveTetriminoOrPlaceOnField();
 
 		}
 	}
@@ -73,9 +73,10 @@ void GameState::Update(float dt)
 	if (autoTimePassed > autoMoveTime)
 	{
 		autoTimePassed = 0;
-		MoveDownOrPlaceOnField();
+		MoveTetriminoOrPlaceOnField();
 	}
 	field.ShowOnField(*tetrimino);
+	field.ClearFullRows();
 }
 
 void GameState::Draw()
@@ -88,7 +89,7 @@ void GameState::Draw()
 
 //// **** Private Functions ****
 
-void GameState::MoveDownOrPlaceOnField()
+void GameState::MoveTetriminoOrPlaceOnField()
 {
 	if (field.CanMoveDown(*tetrimino))
 	{

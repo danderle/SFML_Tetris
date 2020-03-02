@@ -16,7 +16,7 @@ public:
 	void Draw();
 
 private:
-	void MoveDownOrPlaceOnField();
+	void MoveTetriminoOrPlaceOnField();
 
 private:
 	static TetriminoFactory factory;
