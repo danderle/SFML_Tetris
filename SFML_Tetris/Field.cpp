@@ -16,9 +16,10 @@ Field::Field(const sf::Vector2f _position)
 		int col = cell % 10;
 		auto cellPosX = position.x + (col * Cell::Dimensions);
 		auto cellPosY = position.y + (row * Cell::Dimensions);
-		Cell newCell(cellPosX, cellPosY);
+		Cell newCell(cellPosX, cellPosY, background);
 		cells.push_back(newCell);
 	}
+	std::copy(cells.begin(), cells.begin() + Field::width, std::back_inserter(firstRow));
 }
 
 void Field::ShowOnField(Tetrimino& tetrimino)
@@ -116,24 +117,6 @@ const bool Field::CanRotate(Tetrimino& tetrimino) const
 	return canMove;
 }
 
-void Field::Draw(sf::RenderWindow& wnd)
-{
-	for (auto cell : cells)
-	{
-		wnd.draw(cell.GetShape());
-	}
-	wnd.draw(frame);
-}
-
-void Field::PlaceLastPositionOnField(const sf::Color tetriminoColor)
-{
-	for (int cell : lastPosition)
-	{
-		cells[cell].SetColor(tetriminoColor);
-		cells[cell].Occupied();
-	}
-}
-
 void Field::ClearFieldAndSaveLastPosition()
 {
 	std::vector<int> tetriLastPos;
@@ -151,6 +134,50 @@ void Field::ClearFieldAndSaveLastPosition()
 	lastPosition = tetriLastPos;
 }
 
+void Field::PlaceLastPositionOnField(const sf::Color tetriminoColor)
+{
+	for (int cell : lastPosition)
+	{
+		cells[cell].SetColor(tetriminoColor);
+		cells[cell].Occupied();
+	}
+}
+
+void Field::ClearFullRows()
+{
+	int occupiedCounter = 0;
+	bool rowCleared = false;
+	std::vector<int> clearedRows;
+	for (int row = 0; row < height; row++)
+	{
+		if (RowIsFull(row))
+		{
+			ClearRow(row);
+			clearedRows.push_back(row);
+			rowCleared = true;
+		}
+	}
+	if (rowCleared)
+	{
+		std::reverse(clearedRows.begin(), clearedRows.end());
+		int rowsMoved = 0;
+		for (auto row : clearedRows)
+		{
+			row += rowsMoved;
+			MoveAllRowsDown(row);
+			rowsMoved++;
+		}
+	}
+}
+
+void Field::Draw(sf::RenderWindow& wnd)
+{
+	for (auto& cell : cells)
+	{
+		wnd.draw(cell.GetShape());
+	}
+	wnd.draw(frame);
+}
 
 //// **** Private Functions ****
 
@@ -188,4 +215,43 @@ const bool Field::NextMoveFree(int row, int column, const Tetrimino& tetrimino) 
 		index = Field::width * row + column;
 	}
 	return canMove;
+}
+
+const bool Field::RowIsFull(const int row) const
+{
+	int occupiedCounter = 0;
+	int column = 0;
+	int index = Field::width * row + column; 
+	for (; column < Field::width; column++, index++)
+	{
+		if (cells[index].IsOccupied())
+		{
+			occupiedCounter++;
+		}
+	}
+	return occupiedCounter == Field::width;
+}
+
+void Field::ClearRow(const int row)
+{
+	int column = 0;
+	int index = Field::width * row + column; 
+	for (int column = 0; column < Field::width; column++, index++)
+	{
+		cells[index].NotOccupied();
+	}
+}
+
+void Field::MoveAllRowsDown(const int row)
+{
+	int column = 0;
+	int upTo = Field::width * row + column;
+	std::transform(cells.begin(), cells.begin() + upTo, cells.begin(), 
+		[](Cell cell) 
+		{
+			cell.MoveDown(); 
+			return cell; 
+		});
+	std::copy_backward(cells.begin(), cells.begin() + upTo, cells.begin() + Field::width + upTo);
+	std::copy(firstRow.begin(), firstRow.end(), cells.begin());
 }
