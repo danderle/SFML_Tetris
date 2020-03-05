@@ -1,10 +1,10 @@
 #include "Cell.h"
 
-Cell::Cell(const float xPos, const float yPos)
+Cell::Cell(const float xPos, const float yPos, const sf::Color background)
 {
 	shape.setSize({ (float)Dimensions, (float)Dimensions });
 	shape.setPosition({ xPos, yPos });
-	shape.setFillColor(sf::Color::Red);
+	shape.setFillColor(background);
 	shape.setOutlineThickness(outLineThick);
 	shape.setOutlineColor(outlineColor);
 }
@@ -16,8 +16,12 @@ Cell::Cell(const Cell& src)
 
 Cell& Cell::operator=(const Cell& src)
 {
-	shape = sf::RectangleShape(src.shape);
 	occupied = src.occupied;
+	shape = sf::RectangleShape(src.shape.getSize());
+	shape.setPosition(src.shape.getPosition());
+	shape.setFillColor(src.shape.getFillColor());
+	shape.setOutlineColor(outlineColor);
+	shape.setOutlineThickness(outLineThick);
 
 	return *this;
 }
@@ -50,4 +54,10 @@ const bool Cell::IsOccupied() const
 const sf::RectangleShape& Cell::GetShape() const
 {
 	return shape;
+}
+
+void Cell::MoveDown()
+{
+	auto pos = shape.getPosition();
+	shape.setPosition(pos.x, pos.y + Cell::Dimensions);
 }

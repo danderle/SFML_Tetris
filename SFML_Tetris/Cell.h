@@ -5,7 +5,7 @@ class Cell
 {
 public:
 	Cell() = delete;
-	Cell(const float xPos, const float yPos);
+	Cell(const float xPos, const float yPos, const sf::Color background);
 	Cell(const Cell& src);
 	Cell& operator=(const Cell& src);
 
@@ -15,6 +15,8 @@ public:
 	void NotOccupied();
 	const bool IsOccupied() const;
 	const sf::RectangleShape& GetShape() const;
+	void MoveDown();
+
 public:
 	static constexpr int Dimensions = 35;
 
