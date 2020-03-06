@@ -3,6 +3,7 @@
 #include "State.h"
 #include "Field.h"
 #include "TetriminoFactory.h"
+#include "TextBox.h"
 
 class GameState : public State
 {
@@ -22,6 +23,9 @@ private:
 	static TetriminoFactory factory;
 	std::shared_ptr<GameData> gameData;
 	Field field;
+	TextBox scoreBoard;
+	TextBox nextTetri;
+	TextBox linesCleared;
 	std::unique_ptr<Tetrimino> tetrimino;
 	std::unique_ptr<Tetrimino> nextTetrimino;
 	float autoTimePassed = 0;

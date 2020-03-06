@@ -6,8 +6,14 @@ TetriminoFactory GameState::factory;
 GameState::GameState(std::shared_ptr<GameData> _gameData)
 	:
 	gameData(_gameData),
-	field({30,0})
+	field({(float)Field::FrameThickness, gameData->window.getSize().y - (float)(Field::Height + Field::FrameThickness)}),
+	scoreBoard( WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 3, BLACK)
 {
+	const auto& font = gameData->assets.GetFont(ROBOT_FONT);
+	scoreBoard.SetFont(font);
+	scoreBoard.SetContent("Score");
+	scoreBoard.SetPosition({ Field::TotalWidth + TextBox::Margin, 0});
+	scoreBoard.SetOutline(LIGHTGRAY, -18);
 }
 
 void GameState::Init()
@@ -41,7 +47,6 @@ void GameState::HandleInput()
 			manualTimePassed = 0;
 			autoTimePassed = 0;
 			MoveTetriminoOrPlaceOnField();
-
 		}
 	}
 }
@@ -83,6 +88,7 @@ void GameState::Draw()
 {
 	gameData->window.clear();
 	field.Draw(gameData->window);
+	scoreBoard.Draw(gameData->window);
 	gameData->window.display();
 }
 
