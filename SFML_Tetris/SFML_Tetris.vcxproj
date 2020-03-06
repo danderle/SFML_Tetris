@@ -157,6 +157,7 @@
     <ClCompile Include="States\SplashState.cpp" />
     <ClCompile Include="Tetrimino.cpp" />
     <ClCompile Include="TetriminoFactory.cpp" />
+    <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="States\SplashState.h" />
     <ClInclude Include="Tetrimino.h" />
     <ClInclude Include="TetriminoFactory.h" />
+    <ClInclude Include="TextBox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
