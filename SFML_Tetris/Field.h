@@ -1,7 +1,7 @@
 #pragma once
-#include "SFML/Graphics.hpp"
 #include <vector>
 #include <algorithm>
+#include "DEFINITIONS.h"
 #include "Cell.h"
 #include "Tetrimino.h"
 
@@ -27,6 +27,7 @@ private:
 	const bool RowIsFull(const int row) const;
 	void ClearRow(const int row);
 	void MoveAllRowsDown(const int row);
+
 private:
 	sf::Vector2f position;
 	sf::RectangleShape frame;
@@ -34,9 +35,15 @@ private:
 	std::vector<Cell> firstRow;
 	std::vector<int> lastPosition;
 	
-	const sf::Color background = sf::Color::Transparent;
+	const sf::Color backgroundColor = sf::Color::Transparent;
 
-	static constexpr int width = 10;
-	static constexpr int height = 24;
+	static constexpr int columns = 10;
+	static constexpr int rows = 24;
+
+public:
+	static constexpr int FrameThickness = 18;
+	static constexpr int Width = columns * Cell::Dimensions;
+	static constexpr int Height = rows * Cell::Dimensions;
+	static constexpr int TotalWidth = 2 * FrameThickness + Width;
 };
 
