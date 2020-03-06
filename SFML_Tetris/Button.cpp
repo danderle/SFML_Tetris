@@ -12,64 +12,16 @@ Button::Button(const float width, const float height, const float xPos, const fl
 
 Button::Button(const sf::Vector2f size, const sf::Vector2f position, const sf::Color backColor)
 	:
-	shape(size),
-	color(backColor)
+	TextBox(size, position, backColor)
 {
-	shape.setPosition(position);
-	SetBackColor(color);
+	SetOutline(backColor, -2);
 }
 
-Button::Button(const std::string content, const sf::Color backColor)
-{
-	SetContent(content);
-}
-
-const sf::FloatRect Button::GetRect() const
-{
-	return shape.getGlobalBounds();
-}
 
 void Button::SetFont(const sf::Font& font)
 {
 	text.setFont(font);
 	isTextSet = true;
-}
-
-void Button::SetContent(const std::string& content)
-{
-	text.setString(content);
-}
-
-void Button::SetPosition(const sf::Vector2f position)
-{
-	shape.setPosition(position);
-	text.setPosition(position);
-	CenterText();
-}
-
-void Button::SetCenterAt(sf::Vector2f position)
-{
-	position.x -= (shape.getSize().x / 2);
-	position.y -= (shape.getSize().y / 2);
-	SetPosition(position);
-}
-
-void Button::SetBackColor(const sf::Color backColor)
-{
-	color = backColor;
-	shape.setFillColor(color);
-	shape.setOutlineColor(color);
-	shape.setOutlineThickness(-2);
-}
-
-void Button::CenterText()
-{
-	auto textPosition = text.getPosition();
-	float x = text.getLocalBounds().left;
-	float y = text.getLocalBounds().top;
-	x += (text.getLocalBounds().width - shape.getSize().x)/2;
-	y += (text.getLocalBounds().height - shape.getSize().y)/2;
-	text.setOrigin({ x,y });
 }
 
 void Button::Draw(sf::RenderWindow& wnd)
