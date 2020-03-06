@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "../States/SplashState.h"
+#include "SplashState.h"
 
 Game::Game(int width, int height, std::string title)
 {
