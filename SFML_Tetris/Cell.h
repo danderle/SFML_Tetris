@@ -18,7 +18,7 @@ public:
 	void MoveDown();
 
 public:
-	static constexpr int Dimensions = 35;
+	static constexpr int Dimensions = 36;
 
 private:
 	sf::RectangleShape shape;
