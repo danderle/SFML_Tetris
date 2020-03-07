@@ -7,19 +7,22 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 	:
 	gameData(_gameData),
 	field({(float)Field::FrameThickness, gameData->window.getSize().y - (float)(Field::Height + Field::FrameThickness)}),
-	scoreBoard( WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 3, BLACK)
+	scoreTxtBox( WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 3, BLACK),
+	nextTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 3, BLACK),
+	linesCleared(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 3, BLACK),
+	preview(nextTxtBox)
 {
 	const auto& font = gameData->assets.GetFont(ROBOT_FONT);
-	scoreBoard.SetFont(font);
-	scoreBoard.SetContent("Score");
-	scoreBoard.SetPosition({ Field::TotalWidth + TextBox::Margin, 0});
-	scoreBoard.SetOutline(LIGHTGRAY, -18);
+	SetupScoreTextBox(font);
+	SetupNextTextBox(font);
 }
 
 void GameState::Init()
 {
 	tetrimino = factory.CreateTetrimino();
 	nextTetrimino = factory.CreateTetrimino();
+	preview.SetNext(*nextTetrimino);
+	preview.Center();
 }
 
 void GameState::HandleInput()
@@ -88,7 +91,9 @@ void GameState::Draw()
 {
 	gameData->window.clear();
 	field.Draw(gameData->window);
-	scoreBoard.Draw(gameData->window);
+	scoreTxtBox.Draw(gameData->window);
+	nextTxtBox.Draw(gameData->window);
+	preview.Draw(gameData->window);
 	gameData->window.display();
 }
 
@@ -107,5 +112,27 @@ void GameState::MoveTetriminoOrPlaceOnField()
 		field.PlaceLastPositionOnField(tetrimino->GetColor());
 		tetrimino = std::move(nextTetrimino);
 		nextTetrimino = factory.CreateTetrimino();
+		preview.SetNext(*nextTetrimino);
+		preview.Center();
 	}
+}
+
+void GameState::SetupScoreTextBox(const sf::Font& font)
+{
+	scoreTxtBox.SetFont(font);
+	std::string text = "SCORE\n" + std::to_string(currentScore);
+	scoreTxtBox.SetContent(text);
+	scoreTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, 0 });
+	scoreTxtBox.SetOutline(LIGHTGRAY, -18);
+	scoreTxtBox.CenterText();
+}
+
+void GameState::SetupNextTextBox(const sf::Font& font)
+{
+	nextTxtBox.SetFont(font);
+	std::string text = "NEXT";
+	nextTxtBox.SetContent(text);
+	nextTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, scoreTxtBox.GetRect().height + TextBox::Margin});
+	nextTxtBox.SetOutline(LIGHTGRAY, -18);
+	nextTxtBox.CenterTopText();
 }

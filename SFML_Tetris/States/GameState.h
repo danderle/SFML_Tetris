@@ -4,6 +4,7 @@
 #include "Field.h"
 #include "TetriminoFactory.h"
 #include "TextBox.h"
+#include "Preview.h"
 
 class GameState : public State
 {
@@ -18,20 +19,23 @@ public:
 
 private:
 	void MoveTetriminoOrPlaceOnField();
+	void SetupScoreTextBox(const sf::Font& font);
+	void SetupNextTextBox(const sf::Font& font);
 
 private:
 	static TetriminoFactory factory;
 	std::shared_ptr<GameData> gameData;
 	Field field;
-	TextBox scoreBoard;
-	TextBox nextTetri;
+	TextBox scoreTxtBox;
+	TextBox nextTxtBox;
 	TextBox linesCleared;
 	std::unique_ptr<Tetrimino> tetrimino;
 	std::unique_ptr<Tetrimino> nextTetrimino;
+	Preview preview;
+	int currentScore = 0;
 	float autoTimePassed = 0;
 	float manualTimePassed = 0;
+	
 	static constexpr float autoMoveTime = 0.5f;
 	static constexpr float manualMoveTime = 0.1f;
-	std::vector<std::vector<bool> > tetri = { {true ,true},
-											  {true ,true} };
 };
