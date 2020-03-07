@@ -15,11 +15,11 @@ public:
 private:
 	std::vector<sf::RectangleShape> shapes;
 	const TextBox& textBox;
-	int rows;
-	int columns;
-	int width;
-	int height;
+	int rows = 0;
+	int columns = 0;
+	int width = 0;
+	int height = 0;
 	static constexpr int outLineThick = -1;
-	static constexpr int Dimensions = 25;
+	static constexpr int dimensions = 30;
 };
 

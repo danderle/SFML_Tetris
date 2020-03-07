@@ -12,15 +12,15 @@ void Preview::SetNext(const Tetrimino& tetrimino)
 	shapes.clear();
 	rows = tetrimino.GetHeight() + 1;
 	columns = tetrimino.GetWidth() + 1;
-	width = columns * Dimensions;
-	height = rows * Dimensions;
+	width = columns * dimensions;
+	height = rows * dimensions;
 	sf::Color color = tetrimino.GetColor();
 	auto tetri = tetrimino.GetPosition();
 	for (auto tetriRow : tetri)
 	{
 		for (auto tetriCol : tetriRow)
 		{
-			sf::RectangleShape shape({ (float)Dimensions, (float)Dimensions });
+			sf::RectangleShape shape({ (float)dimensions, (float)dimensions });
 			if (tetriCol)
 			{
 				shape.setFillColor(color);
@@ -34,7 +34,7 @@ void Preview::SetNext(const Tetrimino& tetrimino)
 			shapes.push_back(shape);
 		}
 	}
-	
+	Center();
 }
 
 void Preview::Center()
@@ -47,7 +47,7 @@ void Preview::Center()
 		for (int col = 0; col < columns; col++)
 		{
 			int index = columns * row + col;
-			shapes[index].setPosition(pos.x + (Dimensions * col), pos.y + (Dimensions * row));
+			shapes[index].setPosition(pos.x + (dimensions * col), pos.y + (dimensions * row));
 		}
 	}
 }
