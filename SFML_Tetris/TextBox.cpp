@@ -26,20 +26,33 @@ const sf::FloatRect TextBox::GetRect() const
 	return shape.getGlobalBounds();
 }
 
-void TextBox::SetFont(const sf::Font& font)
+void TextBox::SetFont(const sf::Font& font, const unsigned int charSize)
 {
-	text.setFont(font);
+	centerText.setFont(font);
+	topText.setFont(font);
+	centerText.setCharacterSize(charSize);
+	topText.setCharacterSize(charSize);
+	isTextSet = true;
 }
 
-void TextBox::SetContent(const std::string& content)
+void TextBox::SetContent(const std::string& content, const Alignment alignment)
 {
-	text.setString(content);
+	switch (alignment)
+	{
+	case Alignment::TOP:
+		topText.setString(content);
+		break;
+	case Alignment::CENTER:
+		centerText.setString(content);
+		break;
+	}
 }
 
 void TextBox::SetPosition(const sf::Vector2f position)
 {
 	shape.setPosition(position);
-	text.setPosition(position);
+	topText.setPosition(position);
+	centerText.setPosition(position);
 }
 
 void TextBox::SetCenterAt(sf::Vector2f position)
@@ -64,20 +77,20 @@ void TextBox::SetOutline(const sf::Color color, const float thickness)
 
 void TextBox::CenterTopText()
 {
-	float x = text.getLocalBounds().left;
-	float y = text.getLocalBounds().top;
-	x += (text.getLocalBounds().width - shape.getSize().x) / 2;
+	float x = topText.getLocalBounds().left;
+	float y = topText.getLocalBounds().top;
+	x += (topText.getLocalBounds().width - shape.getSize().x) / 2;
 	y += outlineThickness - Padding;
-	text.setOrigin({ x,y });
+	topText.setOrigin({ x,y });
 }
 
 void TextBox::CenterText()
 {
-	float x = text.getLocalBounds().left;
-	float y = text.getLocalBounds().top;
-	x += (text.getLocalBounds().width - shape.getSize().x) / 2;
-	y += (text.getLocalBounds().height - shape.getSize().y) / 2;
-	text.setOrigin({ x,y });
+	float x = centerText.getLocalBounds().left;
+	float y = centerText.getLocalBounds().top;
+	x += (centerText.getLocalBounds().width - shape.getSize().x) / 2;
+	y += (centerText.getLocalBounds().height - shape.getSize().y) / 2;
+	centerText.setOrigin({ x,y });
 }
 
 const sf::Vector2f TextBox::GetPosition() const
@@ -88,6 +101,7 @@ const sf::Vector2f TextBox::GetPosition() const
 void TextBox::Draw(sf::RenderWindow& wnd)
 {
 	wnd.draw(shape);
-	wnd.draw(text);
+	wnd.draw(topText);
+	wnd.draw(centerText);
 }
 
