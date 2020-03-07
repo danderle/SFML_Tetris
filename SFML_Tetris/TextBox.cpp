@@ -40,7 +40,6 @@ void TextBox::SetPosition(const sf::Vector2f position)
 {
 	shape.setPosition(position);
 	text.setPosition(position);
-	CenterText();
 }
 
 void TextBox::SetCenterAt(sf::Vector2f position)
@@ -60,16 +59,30 @@ void TextBox::SetOutline(const sf::Color color, const float thickness)
 {
 	shape.setOutlineColor(color);
 	shape.setOutlineThickness(thickness);
+	outlineThickness = thickness;
+}
+
+void TextBox::CenterTopText()
+{
+	float x = text.getLocalBounds().left;
+	float y = text.getLocalBounds().top;
+	x += (text.getLocalBounds().width - shape.getSize().x) / 2;
+	y += outlineThickness - Padding;
+	text.setOrigin({ x,y });
 }
 
 void TextBox::CenterText()
 {
-	auto textPosition = text.getPosition();
 	float x = text.getLocalBounds().left;
 	float y = text.getLocalBounds().top;
 	x += (text.getLocalBounds().width - shape.getSize().x) / 2;
 	y += (text.getLocalBounds().height - shape.getSize().y) / 2;
 	text.setOrigin({ x,y });
+}
+
+const sf::Vector2f TextBox::GetPosition() const
+{
+	return shape.getPosition();
 }
 
 void TextBox::Draw(sf::RenderWindow& wnd)

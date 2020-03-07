@@ -16,15 +16,19 @@ public:
 	void SetCenterAt(sf::Vector2f position);
 	void SetBackColor(const sf::Color backColor);
 	void SetOutline(const sf::Color color, const float thickness);
+	void CenterTopText();
 	void CenterText();
+	const sf::Vector2f GetPosition() const;
 	virtual void Draw(sf::RenderWindow& wnd);
+
 
 public:
 	static constexpr int Margin = 6;
-
+	static constexpr int Padding = 5;
 protected:
 	sf::RectangleShape shape;
 	sf::Text text;
 	sf::Color color;
+	float outlineThickness = 0.f;
 };
 

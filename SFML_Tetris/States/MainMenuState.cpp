@@ -15,6 +15,7 @@ void MainMenuState::Init()
 	playButton.SetFont(font);
 	playButton.SetContent("Play");
 	playButton.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2});
+	playButton.CenterText();
 }
 
 void MainMenuState::HandleInput()
