@@ -10,11 +10,7 @@ public:
 	Button(float width, float height, float xPos, float yPos, const sf::Color backColor = sf::Color::Green);
 	Button(sf::Vector2f size, sf::Vector2f position, const sf::Color backColor = sf::Color::Green);
 
-	virtual void SetFont(const sf::Font& font) override;
 	virtual void Draw(sf::RenderWindow& wnd) override;
 	void MouseHover(const bool mouseIsHovering);
-
-private:
-	bool isTextSet = false;
 };
 

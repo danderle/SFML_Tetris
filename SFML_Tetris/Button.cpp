@@ -17,19 +17,12 @@ Button::Button(const sf::Vector2f size, const sf::Vector2f position, const sf::C
 	SetOutline(backColor, -2);
 }
 
-
-void Button::SetFont(const sf::Font& font)
-{
-	text.setFont(font);
-	isTextSet = true;
-}
-
 void Button::Draw(sf::RenderWindow& wnd)
 {
 	wnd.draw(shape);
 	if (isTextSet)
 	{
-		wnd.draw(text);
+		wnd.draw(centerText);
 	}
 }
 
@@ -38,11 +31,11 @@ void Button::MouseHover(const bool mouseIsHovering)
 	if (mouseIsHovering)
 	{
 		shape.setFillColor(sf::Color::Transparent);
-		text.setFillColor(color);
+		centerText.setFillColor(color);
 	}
 	else
 	{
 		shape.setFillColor(color);
-		text.setFillColor(sf::Color::Black);
+		centerText.setFillColor(sf::Color::Black);
 	}
 }
