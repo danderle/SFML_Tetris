@@ -19,8 +19,7 @@ public:
 
 private:
 	void MoveTetriminoOrPlaceOnField();
-	void SetupScoreTextBox(const sf::Font& font);
-	void SetupNextTextBox(const sf::Font& font);
+	void SetupTextBox();
 
 private:
 	static TetriminoFactory factory;
@@ -28,11 +27,12 @@ private:
 	Field field;
 	TextBox scoreTxtBox;
 	TextBox nextTxtBox;
-	TextBox linesCleared;
+	TextBox linesClearedTxtBox;
 	std::unique_ptr<Tetrimino> tetrimino;
 	std::unique_ptr<Tetrimino> nextTetrimino;
 	Preview preview;
 	int currentScore = 0;
+	int linesCleared = 0;
 	float autoTimePassed = 0;
 	float manualTimePassed = 0;
 	

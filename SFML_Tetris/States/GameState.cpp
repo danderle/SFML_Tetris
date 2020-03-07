@@ -7,14 +7,12 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 	:
 	gameData(_gameData),
 	field({(float)Field::FrameThickness, gameData->window.getSize().y - (float)(Field::Height + Field::FrameThickness)}),
-	scoreTxtBox( WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 3, BLACK),
-	nextTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 3, BLACK),
-	linesCleared(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 3, BLACK),
+	scoreTxtBox( WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 5, BLACK),
+	nextTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 4, BLACK),
+	linesClearedTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 5, BLACK),
 	preview(nextTxtBox)
 {
-	const auto& font = gameData->assets.GetFont(ROBOT_FONT);
-	SetupScoreTextBox(font);
-	SetupNextTextBox(font);
+	SetupTextBox();
 }
 
 void GameState::Init()
@@ -93,6 +91,7 @@ void GameState::Draw()
 	field.Draw(gameData->window);
 	scoreTxtBox.Draw(gameData->window);
 	nextTxtBox.Draw(gameData->window);
+	linesClearedTxtBox.Draw(gameData->window);
 	preview.Draw(gameData->window);
 	gameData->window.display();
 }
@@ -113,26 +112,38 @@ void GameState::MoveTetriminoOrPlaceOnField()
 		tetrimino = std::move(nextTetrimino);
 		nextTetrimino = factory.CreateTetrimino();
 		preview.SetNext(*nextTetrimino);
-		preview.Center();
 	}
 }
 
-void GameState::SetupScoreTextBox(const sf::Font& font)
+void GameState::SetupTextBox()
 {
-	scoreTxtBox.SetFont(font);
-	std::string text = "SCORE\n" + std::to_string(currentScore);
-	scoreTxtBox.SetContent(text);
+	const auto& font = gameData->assets.GetFont(ROBOT_FONT);
+	float outlineThickness = -15;
+	unsigned int charSize = 20;
+	scoreTxtBox.SetFont(font, charSize);
+	std::string text = "SCORE";
+	scoreTxtBox.SetContent(text, Alignment::TOP);
+	text = std::to_string(currentScore);
+	scoreTxtBox.SetContent(text, Alignment::CENTER);
 	scoreTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, 0 });
-	scoreTxtBox.SetOutline(LIGHTGRAY, -18);
+	scoreTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	scoreTxtBox.CenterTopText();
 	scoreTxtBox.CenterText();
-}
 
-void GameState::SetupNextTextBox(const sf::Font& font)
-{
-	nextTxtBox.SetFont(font);
-	std::string text = "NEXT";
-	nextTxtBox.SetContent(text);
-	nextTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, scoreTxtBox.GetRect().height + TextBox::Margin});
-	nextTxtBox.SetOutline(LIGHTGRAY, -18);
+	nextTxtBox.SetFont(font, charSize);
+	text = "NEXT";
+	nextTxtBox.SetContent(text, Alignment::TOP);
+	nextTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, scoreTxtBox.GetRect().height + TextBox::Margin });
+	nextTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
 	nextTxtBox.CenterTopText();
+
+	linesClearedTxtBox .SetFont(font, charSize);
+	text = "LINES CLEARED";
+	linesClearedTxtBox.SetContent(text, Alignment::TOP);
+	text = std::to_string(linesCleared);
+	linesClearedTxtBox.SetContent(text, Alignment::CENTER);
+	linesClearedTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, scoreTxtBox.GetRect().height + nextTxtBox.GetRect().height + TextBox::Margin * 2 });
+	linesClearedTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	linesClearedTxtBox.CenterTopText();
+	linesClearedTxtBox.CenterText();
 }
