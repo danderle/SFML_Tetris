@@ -13,7 +13,7 @@ void MainMenuState::Init()
 	gameData->assets.LoadFont(ROBOT_FONT, ROBOTO_FONT_PATH);
 	const auto& font = gameData->assets.GetFont(ROBOT_FONT);
 	playButton.SetFont(font);
-	playButton.SetContent("Play");
+	playButton.SetContent("Play", Alignment::CENTER);
 	playButton.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2});
 	playButton.CenterText();
 }
