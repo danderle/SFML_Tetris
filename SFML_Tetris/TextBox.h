@@ -21,6 +21,7 @@ public:
 	void SetPosition(const sf::Vector2f position);
 	void SetCenterAt(sf::Vector2f position);
 	void SetBackColor(const sf::Color backColor);
+	void SetTextColor(sf::Color color);
 	void SetOutline(const sf::Color color, const float thickness);
 	void CenterTopText();
 	void CenterText();

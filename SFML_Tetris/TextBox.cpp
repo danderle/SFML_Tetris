@@ -41,9 +41,11 @@ void TextBox::SetContent(const std::string& content, const Alignment alignment)
 	{
 	case Alignment::TOP:
 		topText.setString(content);
+		CenterTopText();
 		break;
 	case Alignment::CENTER:
 		centerText.setString(content);
+		CenterText();
 		break;
 	}
 }
@@ -66,6 +68,12 @@ void TextBox::SetBackColor(const sf::Color backColor)
 {
 	color = backColor;
 	shape.setFillColor(color);
+}
+
+void TextBox::SetTextColor(sf::Color color)
+{
+	topText.setFillColor(color);
+	centerText.setFillColor(color);
 }
 
 void TextBox::SetOutline(const sf::Color color, const float thickness)
