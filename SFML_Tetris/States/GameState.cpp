@@ -7,9 +7,11 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 	:
 	gameData(_gameData),
 	field({(float)Field::FrameThickness, gameData->window.getSize().y - (float)(Field::Height + Field::FrameThickness)}),
-	scoreTxtBox( WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 5, BLACK),
+	scoreTxtBox( WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 6, BLACK),
 	nextTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 4, BLACK),
-	linesClearedTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 5, BLACK),
+	linesClearedTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 6, BLACK),
+	droughtTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 6, BLACK),
+	levelTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 6, BLACK),
 	preview(nextTxtBox)
 {
 	SetupTextBox();
@@ -18,6 +20,7 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 void GameState::Init()
 {
 	tetrimino = factory.CreateTetrimino();
+	iDroughtCount += tetrimino->IsI() ? -1 * iDroughtCount : 1;
 	nextTetrimino = factory.CreateTetrimino();
 	preview.SetNext(*nextTetrimino);
 	preview.Center();
@@ -76,13 +79,15 @@ void GameState::Update(float dt)
 {
 	manualTimePassed += dt;
 	autoTimePassed += dt;
-	if (autoTimePassed > autoMoveTime)
+	if (autoTimePassed > fallingSpeed)
 	{
 		autoTimePassed = 0;
 		MoveTetriminoOrPlaceOnField();
 	}
 	field.ShowOnField(*tetrimino);
-	field.ClearFullRows();
+	field.ClearFullRows(currentScore, linesCleared, level);
+	fallingSpeed = startSpeed - (0.03f * level);
+	UpdateTextBox();
 }
 
 void GameState::Draw()
@@ -92,6 +97,8 @@ void GameState::Draw()
 	scoreTxtBox.Draw(gameData->window);
 	nextTxtBox.Draw(gameData->window);
 	linesClearedTxtBox.Draw(gameData->window);
+	droughtTxtBox.Draw(gameData->window);
+	levelTxtBox.Draw(gameData->window);
 	preview.Draw(gameData->window);
 	gameData->window.display();
 }
@@ -110,6 +117,15 @@ void GameState::MoveTetriminoOrPlaceOnField()
 		field.ClearFieldAndSaveLastPosition();
 		field.PlaceLastPositionOnField(tetrimino->GetColor());
 		tetrimino = std::move(nextTetrimino);
+		iDroughtCount += tetrimino->IsI() ? -1 * iDroughtCount : 1;
+		if (iDroughtCount > 15)
+		{
+			droughtTxtBox.SetTextColor(RED);
+		}
+		else
+		{
+			droughtTxtBox.SetTextColor(WHITE);
+		}
 		nextTetrimino = factory.CreateTetrimino();
 		preview.SetNext(*nextTetrimino);
 	}
@@ -125,7 +141,7 @@ void GameState::SetupTextBox()
 	scoreTxtBox.SetContent(text, Alignment::TOP);
 	text = std::to_string(currentScore);
 	scoreTxtBox.SetContent(text, Alignment::CENTER);
-	scoreTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, 0 });
+	scoreTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, 60 });
 	scoreTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
 	scoreTxtBox.CenterTopText();
 	scoreTxtBox.CenterText();
@@ -133,7 +149,8 @@ void GameState::SetupTextBox()
 	nextTxtBox.SetFont(font, charSize);
 	text = "NEXT";
 	nextTxtBox.SetContent(text, Alignment::TOP);
-	nextTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, scoreTxtBox.GetRect().height + TextBox::Margin });
+	float yPos = scoreTxtBox.GetPosition().y + scoreTxtBox.GetRect().height + TextBox::Margin;
+	nextTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
 	nextTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
 	nextTxtBox.CenterTopText();
 
@@ -142,8 +159,39 @@ void GameState::SetupTextBox()
 	linesClearedTxtBox.SetContent(text, Alignment::TOP);
 	text = std::to_string(linesCleared);
 	linesClearedTxtBox.SetContent(text, Alignment::CENTER);
-	linesClearedTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, scoreTxtBox.GetRect().height + nextTxtBox.GetRect().height + TextBox::Margin * 2 });
+	yPos = nextTxtBox.GetPosition().y + scoreTxtBox.GetRect().height + TextBox::Margin;
+	linesClearedTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
 	linesClearedTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
 	linesClearedTxtBox.CenterTopText();
 	linesClearedTxtBox.CenterText();
+
+	droughtTxtBox.SetFont(font, charSize);
+	text = "DROUGHT";
+	droughtTxtBox.SetContent(text, Alignment::TOP);
+	text = std::to_string(iDroughtCount);
+	droughtTxtBox.SetContent(text, Alignment::CENTER);
+	yPos = linesClearedTxtBox.GetPosition().y + linesClearedTxtBox.GetRect().height + TextBox::Margin;
+	droughtTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
+	droughtTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	droughtTxtBox.CenterTopText();
+	droughtTxtBox.CenterText();
+
+	levelTxtBox.SetFont(font, charSize);
+	text = "LEVEL";
+	levelTxtBox.SetContent(text, Alignment::TOP);
+	text = std::to_string(level);
+	levelTxtBox.SetContent(text, Alignment::CENTER);
+	yPos = droughtTxtBox.GetPosition().y + droughtTxtBox.GetRect().height + TextBox::Margin;
+	levelTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
+	levelTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	levelTxtBox.CenterTopText();
+	levelTxtBox.CenterText();
+}
+
+void GameState::UpdateTextBox()
+{
+	scoreTxtBox.SetContent(std::to_string(currentScore), Alignment::CENTER);
+	linesClearedTxtBox.SetContent(std::to_string(linesCleared), Alignment::CENTER);
+	droughtTxtBox.SetContent(std::to_string(iDroughtCount), Alignment::CENTER);
+	levelTxtBox.SetContent(std::to_string(level), Alignment::CENTER);
 }

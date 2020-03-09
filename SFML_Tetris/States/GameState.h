@@ -20,6 +20,7 @@ public:
 private:
 	void MoveTetriminoOrPlaceOnField();
 	void SetupTextBox();
+	void UpdateTextBox();
 
 private:
 	static TetriminoFactory factory;
@@ -28,14 +29,20 @@ private:
 	TextBox scoreTxtBox;
 	TextBox nextTxtBox;
 	TextBox linesClearedTxtBox;
+	TextBox droughtTxtBox;
+	TextBox levelTxtBox;
 	std::unique_ptr<Tetrimino> tetrimino;
 	std::unique_ptr<Tetrimino> nextTetrimino;
 	Preview preview;
-	int currentScore = 0;
-	int linesCleared = 0;
+	unsigned int currentScore = 0;
+	unsigned int linesCleared = 0;
+	unsigned int level = 1;
+	unsigned int iDroughtCount = 0;
+
 	float autoTimePassed = 0;
 	float manualTimePassed = 0;
+	float fallingSpeed = startSpeed;
 	
-	static constexpr float autoMoveTime = 0.5f;
+	static constexpr float startSpeed = 0.83f;
 	static constexpr float manualMoveTime = 0.1f;
 };
