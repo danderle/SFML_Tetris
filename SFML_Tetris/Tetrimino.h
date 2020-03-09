@@ -18,6 +18,7 @@ public:
 	int GetColumn() const;
 	int GetWidth() const;
 	int GetHeight() const;
+	const bool IsI() const;
 	std::vector<std::vector<bool> > GetPosition() const;
 	sf::Color GetColor() const;
 

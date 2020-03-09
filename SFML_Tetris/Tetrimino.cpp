@@ -32,7 +32,7 @@ void Tetrimino::RotateLeft()
 	for (int col = type[0].size()-1; col >= 0; col--)
 	{
 		std::vector<bool> newRow;
-		for (int row = 0; row < type.size(); row++)
+		for (unsigned int row = 0; row < type.size(); row++)
 		{
 			newRow.push_back(type[row][col]);
 		}
@@ -44,7 +44,7 @@ void Tetrimino::RotateLeft()
 void Tetrimino::RotateRight()
 {
 	std::vector<std::vector<bool>> typeRotated;
-	for (int col = 0; col < type[0].size(); col++)
+	for (unsigned int col = 0; col < type[0].size(); col++)
 	{
 		std::vector<bool> newRow;
 		for (int row = type.size()-1; row >= 0; row--)
@@ -74,6 +74,11 @@ int Tetrimino::GetWidth() const
 int Tetrimino::GetHeight() const
 {
 	return type.size()-1;
+}
+
+const bool Tetrimino::IsI() const
+{
+	return type.size() == 1;
 }
 
 std::vector<std::vector<bool>> Tetrimino::GetPosition() const
