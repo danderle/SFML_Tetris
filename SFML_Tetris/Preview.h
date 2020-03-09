@@ -20,6 +20,6 @@ private:
 	int width = 0;
 	int height = 0;
 	static constexpr int outLineThick = -1;
-	static constexpr int dimensions = 30;
+	static constexpr int dimensions = 36;
 };
 
