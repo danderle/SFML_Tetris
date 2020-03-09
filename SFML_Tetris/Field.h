@@ -18,15 +18,15 @@ public:
 	const bool CanRotate(Tetrimino& tetrimino) const;
 	void ClearFieldAndSaveLastPosition();
 	void PlaceLastPositionOnField(const sf::Color tetriminoColor);
-	void ClearFullRows();
+	void ClearFullRows(unsigned int& currentScore, unsigned int& linesCleared, unsigned int& level);
 	void Draw(sf::RenderWindow& wnd);
-	
 private:
 	void ClearField();
 	const bool NextMoveFree(int row, int colum, const Tetrimino& tetriminon) const;
 	const bool RowIsFull(const int row) const;
 	void ClearRow(const int row);
 	void MoveAllRowsDown(const int row);
+	
 
 private:
 	sf::Vector2f position;

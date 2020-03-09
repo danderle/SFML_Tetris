@@ -151,7 +151,7 @@ void Field::PlaceLastPositionOnField(const sf::Color tetriminoColor)
 	}
 }
 
-void Field::ClearFullRows()
+void Field::ClearFullRows(unsigned int& currentScore, unsigned int& linesCleared, unsigned int& level)
 {
 	int occupiedCounter = 0;
 	bool rowCleared = false;
@@ -167,6 +167,27 @@ void Field::ClearFullRows()
 	}
 	if (rowCleared)
 	{
+		unsigned int numOfClearedRows = clearedRows.size();
+		linesCleared += numOfClearedRows;
+		level = linesCleared / 10;
+		level = level == 0 ? 1 : level;
+		switch (numOfClearedRows)
+		{
+		case 1:
+			currentScore += 40 * level;
+			break;
+		case 2:
+			currentScore += 100 * level;
+			break;
+		case 3:
+			currentScore += 300 * level;
+			break;
+		case 4:
+			currentScore += 1200 * level;
+			break;
+		default:
+			currentScore += 0;
+		}
 		std::reverse(clearedRows.begin(), clearedRows.end());
 		int rowsMoved = 0;
 		for (auto row : clearedRows)
@@ -263,3 +284,4 @@ void Field::MoveAllRowsDown(const int row)
 	std::copy_backward(cells.begin(), cells.begin() + upTo, cells.begin() + Field::columns + upTo);
 	std::copy(firstRow.begin(), firstRow.end(), cells.begin());
 }
+
