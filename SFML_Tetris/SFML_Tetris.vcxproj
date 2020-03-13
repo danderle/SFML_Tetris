@@ -152,6 +152,7 @@
     <ClCompile Include="GameStateMachine\InputManager.cpp" />
     <ClCompile Include="GameStateMachine\StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Preview.cpp" />
     <ClCompile Include="States\GameState.cpp" />
     <ClCompile Include="States\MainMenuState.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="GameStateMachine\InputManager.h" />
     <ClInclude Include="GameStateMachine\State.h" />
     <ClInclude Include="GameStateMachine\StateMachine.h" />
+    <ClInclude Include="PauseState.h" />
     <ClInclude Include="Preview.h" />
     <ClInclude Include="States\GameState.h" />
     <ClInclude Include="States\MainMenuState.h" />
