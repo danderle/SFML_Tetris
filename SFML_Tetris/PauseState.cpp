@@ -6,12 +6,12 @@ PauseState::PauseState(std::shared_ptr<GameData> _gameData, const Field& _field,
 	field(_field),
 	textBoxes(_textBoxes),
 	preview(_preview),
-	resumeBtn(250, 50),
+	resumeBtn(350, 80),
 	pauseTxtBox(350, 80)
 {
 	auto& font = gameData->assets.GetFont(ROBOT_FONT);
-	resumeBtn.SetFont(font);
-	resumeBtn.SetOutline(GREEN, -3);
+	resumeBtn.SetFont(font, 40);
+	resumeBtn.SetOutline(GREEN, -5);
 	resumeBtn.SetContent("Continue", Alignment::CENTER);
 	resumeBtn.SetTextColor(GREEN);
 	resumeBtn.CenterText();
