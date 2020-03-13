@@ -36,7 +36,9 @@ protected:
 	sf::RectangleShape shape;
 	sf::Text topText;
 	sf::Text centerText;
-	sf::Color color;
+	sf::Color backColor;
+	sf::Color outlineColor;
+	sf::Color textColor;
 	bool isTextSet = false;
 	float outlineThickness = 0.f;
 };

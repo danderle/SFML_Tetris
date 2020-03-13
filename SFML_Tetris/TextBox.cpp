@@ -12,13 +12,13 @@ TextBox::TextBox(float width, float height, float xPos, float yPos, const sf::Co
 {
 }
 
-TextBox::TextBox(sf::Vector2f size, sf::Vector2f position, const sf::Color backColor)
+TextBox::TextBox(sf::Vector2f size, sf::Vector2f position, const sf::Color _backColor)
 	:
 	shape(size),
-	color(backColor)
+	backColor(_backColor)
 {
 	shape.setPosition(position);
-	SetBackColor(color);
+	SetBackColor(backColor);
 }
 
 const sf::FloatRect TextBox::GetRect() const
@@ -64,21 +64,23 @@ void TextBox::SetCenterAt(sf::Vector2f position)
 	SetPosition(position);
 }
 
-void TextBox::SetBackColor(const sf::Color backColor)
+void TextBox::SetBackColor(const sf::Color _backColor)
 {
-	color = backColor;
-	shape.setFillColor(color);
+	backColor = _backColor;
+	shape.setFillColor(backColor);
 }
 
 void TextBox::SetTextColor(sf::Color color)
 {
-	topText.setFillColor(color);
-	centerText.setFillColor(color);
+	textColor = color;
+	topText.setFillColor(textColor);
+	centerText.setFillColor(textColor);
 }
 
 void TextBox::SetOutline(const sf::Color color, const float thickness)
 {
-	shape.setOutlineColor(color);
+	outlineColor = color;
+	shape.setOutlineColor(outlineColor);
 	shape.setOutlineThickness(thickness);
 	outlineThickness = thickness;
 }
