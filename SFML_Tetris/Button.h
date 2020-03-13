@@ -11,6 +11,6 @@ public:
 	Button(sf::Vector2f size, sf::Vector2f position, const sf::Color backColor = sf::Color::Green);
 
 	virtual void Draw(sf::RenderWindow& wnd) override;
-	void MouseHover(const bool mouseIsHovering);
+	void MouseHoverEffect(const bool mouseIsHovering);
 };
 

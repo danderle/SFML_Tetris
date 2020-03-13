@@ -1,4 +1,5 @@
 #include "Button.h"
+#include <DEFINITIONS.h>
 
 Button::Button(float width, float height, const sf::Color backColor)
 	: Button({ width, height }, { 0, 0 }, backColor)
@@ -26,16 +27,18 @@ void Button::Draw(sf::RenderWindow& wnd)
 	}
 }
 
-void Button::MouseHover(const bool mouseIsHovering)
+void Button::MouseHoverEffect(const bool mouseIsHovering)
 {
 	if (mouseIsHovering)
 	{
-		shape.setFillColor(sf::Color::Transparent);
-		centerText.setFillColor(color);
+		shape.setFillColor(textColor);
+		centerText.setFillColor(BLACK);
+		shape.setOutlineColor(BLACK);
 	}
 	else
 	{
-		shape.setFillColor(color);
-		centerText.setFillColor(sf::Color::Black);
+		shape.setFillColor(BLACK);
+		centerText.setFillColor(textColor);
+		shape.setOutlineColor(textColor);
 	}
 }
