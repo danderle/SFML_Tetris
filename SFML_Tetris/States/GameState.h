@@ -23,8 +23,8 @@ private:
 	void UpdateTextBox();
 
 private:
-	static TetriminoFactory factory;
 	std::shared_ptr<GameData> gameData;
+	static TetriminoFactory factory;
 	Field field;
 	TextBox scoreTxtBox;
 	TextBox nextTxtBox;
@@ -37,10 +37,9 @@ private:
 	unsigned int currentScore = 0;
 	unsigned int linesCleared = 0;
 	unsigned int level = 1;
-	unsigned int iDroughtCount = 0;
+	unsigned int droughtCount = 0;
 
-	float autoTimePassed = 0;
-	float manualTimePassed = 0;
+	float moveTimePassed = 0;
 	float fallingSpeed = startSpeed;
 	
 	static constexpr float startSpeed = 0.83f;

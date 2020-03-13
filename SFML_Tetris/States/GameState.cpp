@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "PauseState.h"
 
 //// initialize TetriminoFactory one time
 TetriminoFactory GameState::factory;
@@ -20,7 +21,7 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 void GameState::Init()
 {
 	tetrimino = factory.CreateTetrimino();
-	iDroughtCount += tetrimino->IsI() ? -1 * iDroughtCount : 1;
+	droughtCount += tetrimino->IsI() ? -1 * droughtCount : 1;
 	nextTetrimino = factory.CreateTetrimino();
 	preview.SetNext(*nextTetrimino);
 	preview.Center();
@@ -28,31 +29,6 @@ void GameState::Init()
 
 void GameState::HandleInput()
 {
-	if (manualTimePassed > manualMoveTime)
-	{
-		if (gameData->input.KeyHit(sf::Keyboard::Key::Left))
-		{
-			manualTimePassed = 0;
-			if (field.CanMoveLeft(*tetrimino))
-			{
-				tetrimino->MoveLeft();
-			}
-		}
-		if (gameData->input.KeyHit(sf::Keyboard::Key::Right))
-		{
-			manualTimePassed = 0;
-			if (field.CanMoveRight(*tetrimino))
-			{
-				tetrimino->MoveRight();
-			}
-		}
-		if (gameData->input.KeyHit(sf::Keyboard::Key::Down))
-		{
-			manualTimePassed = 0;
-			autoTimePassed = 0;
-			MoveTetriminoOrPlaceOnField();
-		}
-	}
 }
 
 void GameState::HandleInput(sf::Event event)
@@ -73,15 +49,43 @@ void GameState::HandleInput(sf::Event event)
 			tetrimino->RotateLeft();
 		}
 	}
+	else if (gameData->input.KeyHit(sf::Keyboard::Key::Left))
+	{
+		if (field.CanMoveLeft(*tetrimino))
+		{
+			tetrimino->MoveLeft();
+		}
+	}
+	else if (gameData->input.KeyHit(sf::Keyboard::Key::Right))
+	{
+		if (field.CanMoveRight(*tetrimino))
+		{
+			tetrimino->MoveRight();
+		}
+	}
+	else if (gameData->input.KeyHit(sf::Keyboard::Key::Down))
+	{
+		moveTimePassed = 0;
+		MoveTetriminoOrPlaceOnField();
+	}
+	else if (gameData->input.KeyHit(sf::Keyboard::Key::Escape))
+	{
+		std::vector<TextBox> textBoxes;
+		textBoxes.push_back(scoreTxtBox);
+		textBoxes.push_back(nextTxtBox);
+		textBoxes.push_back(linesClearedTxtBox);
+		textBoxes.push_back(droughtTxtBox);
+		textBoxes.push_back(levelTxtBox);
+		gameData->machine.AddState(std::make_unique<PauseState>(gameData, field, textBoxes, preview), false);
+	}
 }
 
 void GameState::Update(float dt)
 {
-	manualTimePassed += dt;
-	autoTimePassed += dt;
-	if (autoTimePassed > fallingSpeed)
+	moveTimePassed += dt;
+	if (moveTimePassed > fallingSpeed)
 	{
-		autoTimePassed = 0;
+		moveTimePassed = 0;
 		MoveTetriminoOrPlaceOnField();
 	}
 	field.ShowOnField(*tetrimino);
@@ -117,8 +121,8 @@ void GameState::MoveTetriminoOrPlaceOnField()
 		field.ClearFieldAndSaveLastPosition();
 		field.PlaceLastPositionOnField(tetrimino->GetColor());
 		tetrimino = std::move(nextTetrimino);
-		iDroughtCount += tetrimino->IsI() ? -1 * iDroughtCount : 1;
-		if (iDroughtCount > 15)
+		droughtCount += tetrimino->IsI() ? -1 * droughtCount : 1;
+		if (droughtCount > 15)
 		{
 			droughtTxtBox.SetTextColor(RED);
 		}
@@ -141,7 +145,7 @@ void GameState::SetupTextBox()
 	scoreTxtBox.SetContent(text, Alignment::TOP);
 	text = std::to_string(currentScore);
 	scoreTxtBox.SetContent(text, Alignment::CENTER);
-	scoreTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, 60 });
+	scoreTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, 25 });
 	scoreTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
 	scoreTxtBox.CenterTopText();
 	scoreTxtBox.CenterText();
@@ -159,7 +163,7 @@ void GameState::SetupTextBox()
 	linesClearedTxtBox.SetContent(text, Alignment::TOP);
 	text = std::to_string(linesCleared);
 	linesClearedTxtBox.SetContent(text, Alignment::CENTER);
-	yPos = nextTxtBox.GetPosition().y + scoreTxtBox.GetRect().height + TextBox::Margin;
+	yPos = nextTxtBox.GetPosition().y + nextTxtBox.GetRect().height + TextBox::Margin;
 	linesClearedTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
 	linesClearedTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
 	linesClearedTxtBox.CenterTopText();
@@ -168,7 +172,7 @@ void GameState::SetupTextBox()
 	droughtTxtBox.SetFont(font, charSize);
 	text = "DROUGHT";
 	droughtTxtBox.SetContent(text, Alignment::TOP);
-	text = std::to_string(iDroughtCount);
+	text = std::to_string(droughtCount);
 	droughtTxtBox.SetContent(text, Alignment::CENTER);
 	yPos = linesClearedTxtBox.GetPosition().y + linesClearedTxtBox.GetRect().height + TextBox::Margin;
 	droughtTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
@@ -192,6 +196,6 @@ void GameState::UpdateTextBox()
 {
 	scoreTxtBox.SetContent(std::to_string(currentScore), Alignment::CENTER);
 	linesClearedTxtBox.SetContent(std::to_string(linesCleared), Alignment::CENTER);
-	droughtTxtBox.SetContent(std::to_string(iDroughtCount), Alignment::CENTER);
+	droughtTxtBox.SetContent(std::to_string(droughtCount), Alignment::CENTER);
 	levelTxtBox.SetContent(std::to_string(level), Alignment::CENTER);
 }
