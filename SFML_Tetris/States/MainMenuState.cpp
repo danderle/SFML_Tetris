@@ -13,6 +13,7 @@ void MainMenuState::Init()
 	gameData->assets.LoadFont(ROBOT_FONT, ROBOTO_FONT_PATH);
 	const auto& font = gameData->assets.GetFont(ROBOT_FONT);
 	playButton.SetFont(font);
+	playButton.SetTextColor(GREEN);
 	playButton.SetContent("Play", Alignment::CENTER);
 	playButton.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2});
 	playButton.CenterText();
@@ -21,7 +22,7 @@ void MainMenuState::Init()
 void MainMenuState::HandleInput()
 {
 	bool isHovering = gameData->input.IsHovering(playButton.GetRect(), gameData->window);
-	playButton.MouseHover(isHovering);
+	playButton.MouseHoverEffect(isHovering);
 	bool isClicked = gameData->input.IsRectClicked(playButton.GetRect(), sf::Mouse::Left, gameData->window);
 	if (isClicked)
 	{
