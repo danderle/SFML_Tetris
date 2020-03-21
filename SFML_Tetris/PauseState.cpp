@@ -6,21 +6,21 @@ PauseState::PauseState(std::shared_ptr<GameData> _gameData, const Field& _field,
 	field(_field),
 	textBoxes(_textBoxes),
 	preview(_preview),
-	resumeBtn(350, 80),
-	pauseTxtBox(350, 80)
+	resumeBtn(TEXTBOX_WIDTH, TEXTBOX_HEIGHT),
+	pauseTxtBox(TEXTBOX_WIDTH, TEXTBOX_HEIGHT)
 {
-	auto& font = gameData->assets.GetFont(ROBOT_FONT);
-	resumeBtn.SetFont(font, 40);
-	resumeBtn.SetOutline(GREEN, -5);
+	auto& font = gameData->assets.GetFont(UNISPACE_FONT);
+	resumeBtn.SetFont(font, CHARACTER_SIZE);
+	resumeBtn.SetOutline(GREEN, OUTLINE_THICKNESS);
 	resumeBtn.SetContent("Continue", Alignment::CENTER);
 	resumeBtn.SetTextColor(GREEN);
 	resumeBtn.CenterText();
 	resumeBtn.SetPosition({ WINDOW_WIDTH - resumeBtn.GetRect().width, 0 });
-	pauseTxtBox.SetFont(font, 40);
+	pauseTxtBox.SetFont(font, CHARACTER_SIZE);
 	pauseTxtBox.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 });
 	pauseTxtBox.SetContent("GAME PAUSED", Alignment::CENTER);
 	pauseTxtBox.SetTextColor(BLACK);
-	pauseTxtBox.SetOutline(BLACK, -5);
+	pauseTxtBox.SetOutline(BLACK, OUTLINE_THICKNESS);
 }
 
 void PauseState::Init()
@@ -34,7 +34,6 @@ void PauseState::HandleInput()
 	if (isClicked)
 	{
 		gameData->machine.RemoveState();
-		gameData->machine.ProcessStateChanges();
 	}
 }
 
