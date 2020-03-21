@@ -5,7 +5,9 @@ Game::Game(int width, int height, std::string title)
 {
 	gameData->window.create(sf::VideoMode(width, height), title, 
 		sf::Style::Close | sf::Style::Titlebar);
+	gameData->window.setVerticalSyncEnabled(true);
 	gameData->machine.AddState(std::make_unique<SplashState>(gameData));
+	gameData->assets.LoadFont(UNISPACE_FONT, UNISPACE_FONT_PATH);
 	Run();
 }
 
