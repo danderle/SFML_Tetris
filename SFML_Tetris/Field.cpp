@@ -39,7 +39,7 @@ void Field::ShowOnField(Tetrimino& tetrimino)
 			{
 				if (index < cells.size() && index >= 0)
 				{
-					cells[index].SetColor(color);
+					cells[index].SetFillColor(color);
 				}
 			}
 			index++;
@@ -136,7 +136,7 @@ void Field::ClearFieldAndSaveLastPosition()
 			{
 				tetriLastPos.push_back(cell);
 			}
-			cells[cell].SetColor(backgroundColor);
+			cells[cell].SetFillColor(backgroundColor);
 		}
 	}
 	lastPosition = tetriLastPos;
@@ -146,56 +146,92 @@ void Field::PlaceLastPositionOnField(const sf::Color tetriminoColor)
 {
 	for (int cell : lastPosition)
 	{
-		cells[cell].SetColor(tetriminoColor);
+		cells[cell].SetFillColor(tetriminoColor);
 		cells[cell].Occupied();
 	}
 }
 
-void Field::ClearFullRows(unsigned int& currentScore, unsigned int& linesCleared, unsigned int& level)
+void Field::UpdatePoints(unsigned int& currentScore, unsigned int& linesCleared, unsigned int& level)
 {
-	int occupiedCounter = 0;
-	bool rowCleared = false;
-	std::vector<int> clearedRows;
+	unsigned int numOfClearedRows = fullRows.size();
+	linesCleared += numOfClearedRows;
+	level = linesCleared / 10;
+	level = level == 0 ? 1 : level;
+	switch (numOfClearedRows)
+	{
+	case 1:
+		currentScore += 40 * level;
+		break;
+	case 2:
+		currentScore += 100 * level;
+		break;
+	case 3:
+		currentScore += 300 * level;
+		break;
+	case 4:
+		currentScore += 1200 * level;
+		break;
+	default:
+		currentScore += 0;
+	}
+	
+}
+
+const bool Field::FindFullRows()
+{
 	for (int row = 0; row < rows; row++)
 	{
 		if (RowIsFull(row))
 		{
-			ClearRow(row);
-			clearedRows.push_back(row);
-			rowCleared = true;
+			fullRows.push_back(row);
+			foundFullRow = true;
 		}
 	}
-	if (rowCleared)
+	return foundFullRow;
+}
+
+const bool Field::IsFlashing() const
+{
+	return foundFullRow;
+}
+
+
+void Field::FlashFullRows(const float dt)
+{
+	int column = 0;
+	innerFlash.r += colorChanger;
+	innerFlash.g += colorChanger;
+	innerFlash.b += colorChanger;
+	outerFlash.r -= colorChanger;
+	outerFlash.g -= colorChanger;
+	outerFlash.b -= colorChanger;
+	if (innerFlash.r < 0)
 	{
-		unsigned int numOfClearedRows = clearedRows.size();
-		linesCleared += numOfClearedRows;
-		level = linesCleared / 10;
-		level = level == 0 ? 1 : level;
-		switch (numOfClearedRows)
+		innerFlash = BLACK;
+		outerFlash = WHITE;
+		colorChanger *= -1;
+	}
+	else if (innerFlash.r > 255)
+	{
+		innerFlash = WHITE;
+		outerFlash = BLACK;
+		colorChanger *= -1;
+	}
+	for (auto row : fullRows)
+	{
+		for (int column = 0; column < Field::columns; column++)
 		{
-		case 1:
-			currentScore += 40 * level;
-			break;
-		case 2:
-			currentScore += 100 * level;
-			break;
-		case 3:
-			currentScore += 300 * level;
-			break;
-		case 4:
-			currentScore += 1200 * level;
-			break;
-		default:
-			currentScore += 0;
+			int index = Field::columns * row + column;
+			cells[index].SetFillColor(innerFlash);
+			cells[index].SetOutlineColor(outerFlash);
 		}
-		std::reverse(clearedRows.begin(), clearedRows.end());
-		int rowsMoved = 0;
-		for (auto row : clearedRows)
-		{
-			row += rowsMoved;
-			MoveAllRowsDown(row);
-			rowsMoved++;
-		}
+	}
+	totalFlashTime += dt;
+	if (totalFlashTime > flashTime)
+	{
+		foundFullRow = false;
+		totalFlashTime = 0;
+		MoveAllRowsDown();
 	}
 }
 
@@ -216,7 +252,7 @@ void Field::ClearField()
 	{
 		if (!cells[cell].IsOccupied())
 		{
-			cells[cell].SetColor(backgroundColor);
+			cells[cell].SetFillColor(backgroundColor);
 		}
 	}
 }
@@ -261,7 +297,7 @@ const bool Field::RowIsFull(const int row) const
 	return occupiedCounter == Field::columns;
 }
 
-void Field::ClearRow(const int row)
+void Field::SetRowUnoccupied(const int row)
 {
 	int column = 0;
 	int index = Field::columns * row + column; 
@@ -271,7 +307,20 @@ void Field::ClearRow(const int row)
 	}
 }
 
-void Field::MoveAllRowsDown(const int row)
+void Field::MoveAllRowsDown()
+{
+	std::reverse(fullRows.begin(), fullRows.end());
+	int rowsMoved = 0;
+	for (auto row : fullRows)
+	{
+		row += rowsMoved;
+		MoveRowDown(row);
+		rowsMoved++;
+	}
+	fullRows.clear();
+}
+
+void Field::MoveRowDown(const int row)
 {
 	int column = 0;
 	int upTo = Field::columns * row + column;
@@ -284,4 +333,5 @@ void Field::MoveAllRowsDown(const int row)
 	std::copy_backward(cells.begin(), cells.begin() + upTo, cells.begin() + Field::columns + upTo);
 	std::copy(firstRow.begin(), firstRow.end(), cells.begin());
 }
+
 

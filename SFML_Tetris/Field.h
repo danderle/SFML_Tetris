@@ -18,15 +18,19 @@ public:
 	const bool CanRotate(Tetrimino& tetrimino) const;
 	void ClearFieldAndSaveLastPosition();
 	void PlaceLastPositionOnField(const sf::Color tetriminoColor);
-	void ClearFullRows(unsigned int& currentScore, unsigned int& linesCleared, unsigned int& level);
+	void UpdatePoints(unsigned int& currentScore, unsigned int& linesCleared, unsigned int& level);
+	const bool FindFullRows();
+	const bool IsFlashing() const;
+	void FlashFullRows(const float dt);
 	void Draw(sf::RenderWindow& wnd);
+
 private:
 	void ClearField();
 	const bool NextMoveFree(int row, int colum, const Tetrimino& tetriminon) const;
 	const bool RowIsFull(const int row) const;
-	void ClearRow(const int row);
-	void MoveAllRowsDown(const int row);
-	
+	void SetRowUnoccupied(const int row);
+	void MoveAllRowsDown();
+	void MoveRowDown(const int row);
 
 private:
 	sf::Vector2f position;
@@ -34,12 +38,16 @@ private:
 	std::vector<Cell> cells;
 	std::vector<Cell> firstRow;
 	std::vector<int> lastPosition;
-	
+	std::vector<int> fullRows;
 	const sf::Color backgroundColor = sf::Color::Transparent;
-
+	sf::Color innerFlash = WHITE;
+	sf::Color outerFlash = BLACK;
+	bool foundFullRow = false;
+	float totalFlashTime = 0.f;
+	int colorChanger = 10;
+	static constexpr float flashTime = 1.f;
 	static constexpr int columns = 10;
 	static constexpr int rows = 24;
-
 public:
 	static constexpr int FrameThickness = 18;
 	static constexpr int Width = columns * Cell::Dimensions;
