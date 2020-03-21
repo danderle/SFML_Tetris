@@ -18,7 +18,9 @@ public:
 	const sf::FloatRect GetRect() const;
 	virtual void SetFont(const sf::Font& font, const unsigned int charSize = 30);
 	void SetContent(const std::string& content, const Alignment alignment);
+	void SetPosition(const float xPosition, const float yPosition);
 	void SetPosition(const sf::Vector2f position);
+	void SetCenterAt(const float xPosition, const float yPosition);
 	void SetCenterAt(sf::Vector2f position);
 	void SetBackColor(const sf::Color backColor);
 	void SetTextColor(sf::Color color);

@@ -50,11 +50,21 @@ void TextBox::SetContent(const std::string& content, const Alignment alignment)
 	}
 }
 
+void TextBox::SetPosition(const float xPosition, const float yPosition)
+{
+	SetPosition({ xPosition, yPosition });
+}
+
 void TextBox::SetPosition(const sf::Vector2f position)
 {
 	shape.setPosition(position);
 	topText.setPosition(position);
 	centerText.setPosition(position);
+}
+
+void TextBox::SetCenterAt(const float xPosition, const float yPosition)
+{
+	SetCenterAt({ xPosition, yPosition });
 }
 
 void TextBox::SetCenterAt(sf::Vector2f position)
