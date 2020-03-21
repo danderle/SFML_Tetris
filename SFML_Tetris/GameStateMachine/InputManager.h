@@ -11,5 +11,6 @@ public:
 	bool IsHovering(sf::Rect<float> rect, sf::RenderWindow& window);
 	sf::Vector2i GetMousePosition(sf::RenderWindow& window);
 	bool KeyHit(sf::Keyboard::Key key) const;
+	bool KeyReleased(sf::Event event, sf::Keyboard::Key key) const;
 };
 

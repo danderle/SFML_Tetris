@@ -29,3 +29,8 @@ bool InputManager::KeyHit(sf::Keyboard::Key key) const
 {
 	return sf::Keyboard::isKeyPressed(key);
 }
+
+bool InputManager::KeyReleased(sf::Event event, sf::Keyboard::Key key) const
+{
+	return event.KeyReleased && event.key.code == key;
+}
