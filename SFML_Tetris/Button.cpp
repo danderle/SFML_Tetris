@@ -31,14 +31,14 @@ void Button::MouseHoverEffect(const bool mouseIsHovering)
 {
 	if (mouseIsHovering)
 	{
-		shape.setFillColor(textColor);
-		centerText.setFillColor(BLACK);
-		shape.setOutlineColor(BLACK);
-	}
-	else
-	{
 		shape.setFillColor(BLACK);
 		centerText.setFillColor(textColor);
 		shape.setOutlineColor(textColor);
+	}
+	else
+	{
+		shape.setFillColor(textColor);
+		centerText.setFillColor(BLACK);
+		shape.setOutlineColor(BLACK);
 	}
 }
