@@ -22,6 +22,9 @@ public:
 	std::vector<std::vector<bool> > GetPosition() const;
 	sf::Color GetColor() const;
 
+public:
+	static constexpr int StartingRow = -1;
+
 private:
 	int rowPos;
 	int colPos;

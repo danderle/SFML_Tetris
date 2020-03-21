@@ -4,16 +4,16 @@
 MainMenuState::MainMenuState(std::shared_ptr<GameData> _gameData)
 	:
 	gameData(_gameData),
-	playButton(250, 50)
+	playButton(TEXTBOX_WIDTH, TEXTBOX_HEIGHT)
 {
 }
 
 void MainMenuState::Init()
 {
-	gameData->assets.LoadFont(ROBOT_FONT, ROBOTO_FONT_PATH);
-	const auto& font = gameData->assets.GetFont(ROBOT_FONT);
-	playButton.SetFont(font);
+	const auto& font = gameData->assets.GetFont(UNISPACE_FONT);
+	playButton.SetFont(font, CHARACTER_SIZE);
 	playButton.SetTextColor(GREEN);
+	playButton.SetOutline(GREEN, OUTLINE_THICKNESS);
 	playButton.SetContent("Play", Alignment::CENTER);
 	playButton.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2});
 	playButton.CenterText();

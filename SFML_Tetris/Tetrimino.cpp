@@ -5,9 +5,8 @@ Tetrimino::Tetrimino(std::vector<std::vector<bool>> _type, sf::Color _color)
 	type(_type),
 	color(_color),
 	rowPos(-1),
-	colPos(5)
+	colPos(4)
 {
-	
 }
 
 void Tetrimino::MoveDown()

@@ -5,7 +5,6 @@ SplashState::SplashState(std::shared_ptr<GameData> _gameData)
 	:
 	gameData(_gameData)
 {
-	test = "Constructed";
 }
 
 void SplashState::Init()
