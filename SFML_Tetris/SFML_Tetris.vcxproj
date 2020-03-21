@@ -147,6 +147,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GameStateMachine\AssetManager.cpp" />
     <ClCompile Include="GameStateMachine\Game.cpp" />
     <ClCompile Include="GameStateMachine\InputManager.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="DEFINITIONS.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameStateMachine\AssetManager.h" />
     <ClInclude Include="GameStateMachine\Game.h" />
     <ClInclude Include="GameStateMachine\InputManager.h" />
