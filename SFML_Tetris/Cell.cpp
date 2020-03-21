@@ -26,9 +26,14 @@ Cell& Cell::operator=(const Cell& src)
 	return *this;
 }
 
-void Cell::SetColor(sf::Color color)
+void Cell::SetFillColor(sf::Color color)
 {
 	shape.setFillColor(color);
+}
+
+void Cell::SetOutlineColor(sf::Color color)
+{
+	shape.setOutlineColor(color);
 }
 
 const sf::Color Cell::GetColor() const

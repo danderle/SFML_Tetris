@@ -9,7 +9,8 @@ public:
 	Cell(const Cell& src);
 	Cell& operator=(const Cell& src);
 
-	void SetColor(sf::Color color);
+	void SetFillColor(sf::Color color);
+	void SetOutlineColor(sf::Color color);
 	const sf::Color GetColor() const;
 	void Occupied();
 	void NotOccupied();
