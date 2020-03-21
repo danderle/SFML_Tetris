@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "PauseState.h"
+#include "GameOverState.h"
 
 //// initialize TetriminoFactory one time
 TetriminoFactory GameState::factory;
@@ -65,8 +66,7 @@ void GameState::HandleInput(sf::Event event)
 	}
 	else if (gameData->input.KeyHit(sf::Keyboard::Key::Down))
 	{
-		moveTimePassed = 0;
-		MoveTetriminoOrPlaceOnField();
+		Update(fallingSpeed + 1);
 	}
 	else if (gameData->input.KeyHit(sf::Keyboard::Key::Escape))
 	{
@@ -82,16 +82,26 @@ void GameState::HandleInput(sf::Event event)
 
 void GameState::Update(float dt)
 {
-	moveTimePassed += dt;
-	if (moveTimePassed > fallingSpeed)
+	if (field.IsFlashing())
 	{
-		moveTimePassed = 0;
-		MoveTetriminoOrPlaceOnField();
+		field.FlashFullRows(dt);
 	}
-	field.ShowOnField(*tetrimino);
-	field.ClearFullRows(currentScore, linesCleared, level);
-	fallingSpeed = startSpeed - (0.03f * level);
-	UpdateTextBox();
+	else
+	{
+		moveTimePassed += dt;
+		if (moveTimePassed > fallingSpeed)
+		{
+			moveTimePassed = 0;
+			MoveTetriminoOrPlaceOnField();
+		}
+		field.ShowOnField(*tetrimino);
+		if (field.FindFullRows())
+		{
+			field.UpdatePoints(currentScore, linesCleared, level);
+			fallingSpeed = startSpeed - (0.03f * level);
+			UpdateTextBox();
+		}
+	}
 }
 
 void GameState::Draw()
@@ -118,6 +128,10 @@ void GameState::MoveTetriminoOrPlaceOnField()
 	}
 	else
 	{
+		if (tetrimino->GetRow() == Tetrimino::StartingRow)
+		{
+			gameData->machine.AddState(std::make_unique<GameOverState>(gameData, currentScore));
+		}
 		field.ClearFieldAndSaveLastPosition();
 		field.PlaceLastPositionOnField(tetrimino->GetColor());
 		tetrimino = std::move(nextTetrimino);
@@ -137,7 +151,7 @@ void GameState::MoveTetriminoOrPlaceOnField()
 
 void GameState::SetupTextBox()
 {
-	const auto& font = gameData->assets.GetFont(ROBOT_FONT);
+	const auto& font = gameData->assets.GetFont(UNISPACE_FONT);
 	float outlineThickness = -15;
 	unsigned int charSize = 20;
 	scoreTxtBox.SetFont(font, charSize);
