@@ -1,6 +1,7 @@
 #include "GameState.h"
 #include "PauseState.h"
 #include "GameOverState.h"
+#include <iostream>
 
 //// initialize TetriminoFactory one time
 TetriminoFactory GameState::factory;
@@ -32,7 +33,7 @@ void GameState::HandleInput()
 {
 }
 
-void GameState::HandleInput(sf::Event event)
+void GameState::HandleInput(const sf::Event& event)
 {
 	if (event.key.code == sf::Keyboard::A)
 	{
@@ -50,25 +51,28 @@ void GameState::HandleInput(sf::Event event)
 			tetrimino->RotateLeft();
 		}
 	}
-	else if (gameData->input.KeyHit(sf::Keyboard::Key::Left))
+	else if (event.key.code == sf::Keyboard::Left)
 	{
 		if (field.CanMoveLeft(*tetrimino))
 		{
+			std::cout << "Left \n";
 			tetrimino->MoveLeft();
 		}
 	}
-	else if (gameData->input.KeyHit(sf::Keyboard::Key::Right))
+	else if (event.key.code == sf::Keyboard::Right)
 	{
 		if (field.CanMoveRight(*tetrimino))
 		{
+			std::cout << "Right \n";
 			tetrimino->MoveRight();
 		}
 	}
-	else if (gameData->input.KeyHit(sf::Keyboard::Key::Down))
+	else if (event.key.code == sf::Keyboard::Key::Down)
 	{
 		if (!field.IsFlashing())
 		{
-			Update(fallingSpeed + moveDownTimeOut);
+			moveTimePassed = 0;
+			MoveTetriminoOrPlaceOnField();
 		}
 	}
 	else if (gameData->input.KeyHit(sf::Keyboard::Key::Space))
