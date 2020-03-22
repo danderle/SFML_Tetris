@@ -16,11 +16,21 @@ public:
 	void Draw();
 
 private:
+	void SetupTextBoxes(const sf::Font& font);
+	void LoadHighScores();
+	void SetNewHighScore();
+	void SetupHighScoreTexts(const sf::Font& font);
+	void SetupButtons(const sf::Font& font);
+	void SetGuiElementPositions();
+
+private:
 	std::shared_ptr<GameData> gameData;
 	TextBox gameOverTxtBox;
 	Button newGameBtn;
+	int newScore;
 	bool scoreSet = false;
 	bool scoreHolderSet = false;
+	bool saveNewScore = false;
 	bool switchColor = true;
 	int newScoreindex = 0;
 	float lastFlash = 0.f;
@@ -29,5 +39,6 @@ private:
 	std::vector<sf::Text> scoreTexts;
 	static constexpr char letters[27] = { "ABCDEFGHIJKLMNOPQRSTUVWXYZ" };
 	static constexpr float flashTime = 0.3f;
+	static constexpr unsigned int maxHighScoresSize = 10;
 };
 
