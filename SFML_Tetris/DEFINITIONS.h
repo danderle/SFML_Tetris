@@ -16,6 +16,8 @@
 #define UNISPACE_FONT_PATH "Resources\\Unispace-Rg.ttf"
 #define UNISPACE_FONT "Unispace"
 
+#define HIGHSCORE_PATH "HighScores.txt"
+
 #define RED sf::Color(255,0,0)
 #define GREEN sf::Color(0,255,0)
 #define WHITE sf::Color(255,255,255)
