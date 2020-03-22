@@ -13,7 +13,7 @@ public:
 
 	void Init();
 	void HandleInput();
-	void HandleInput(sf::Event event);
+	void HandleInput(const sf::Event& event);
 	void Update(float dt);
 	void Draw();
 

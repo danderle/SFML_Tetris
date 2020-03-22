@@ -30,7 +30,7 @@ void MainMenuState::HandleInput()
 	}
 }
 
-void MainMenuState::HandleInput(sf::Event event)
+void MainMenuState::HandleInput(const sf::Event& event)
 {
 }
 

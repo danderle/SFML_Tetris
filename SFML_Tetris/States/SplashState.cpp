@@ -20,7 +20,7 @@ void SplashState::HandleInput()
 {
 }
 
-void SplashState::HandleInput(sf::Event event)
+void SplashState::HandleInput(const sf::Event& event)
 {
 }
 

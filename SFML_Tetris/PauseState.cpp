@@ -37,7 +37,7 @@ void PauseState::HandleInput()
 	}
 }
 
-void PauseState::HandleInput(sf::Event event)
+void PauseState::HandleInput(const sf::Event& event)
 {
 }
 
