@@ -66,9 +66,12 @@ void GameState::HandleInput(sf::Event event)
 	}
 	else if (gameData->input.KeyHit(sf::Keyboard::Key::Down))
 	{
-		Update(fallingSpeed + 1);
+		if (!field.IsFlashing())
+		{
+			Update(fallingSpeed + moveDownTimeOut);
+		}
 	}
-	else if (gameData->input.KeyHit(sf::Keyboard::Key::Escape))
+	else if (gameData->input.KeyHit(sf::Keyboard::Key::Space))
 	{
 		std::vector<TextBox> textBoxes;
 		textBoxes.push_back(scoreTxtBox);
@@ -76,7 +79,8 @@ void GameState::HandleInput(sf::Event event)
 		textBoxes.push_back(linesClearedTxtBox);
 		textBoxes.push_back(droughtTxtBox);
 		textBoxes.push_back(levelTxtBox);
-		gameData->machine.AddState(std::make_unique<PauseState>(gameData, field, textBoxes, preview), false);
+		//gameData->machine.AddState(std::make_unique<PauseState>(gameData, field, textBoxes, preview), false);
+		gameData->machine.AddState(std::make_unique<GameOverState>(gameData, 40), false);
 	}
 }
 

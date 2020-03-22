@@ -44,4 +44,5 @@ private:
 	
 	static constexpr float startSpeed = 0.83f;
 	static constexpr float manualMoveTime = 0.1f;
+	static constexpr float moveDownTimeOut = 5.f;
 };
