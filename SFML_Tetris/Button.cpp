@@ -18,6 +18,23 @@ Button::Button(const sf::Vector2f size, const sf::Vector2f position, const sf::C
 	SetOutline(backColor, -2);
 }
 
+void Button::Enable()
+{
+	enabled = true;
+	SetStandardDisplay();
+}
+
+void Button::Disable()
+{
+	enabled = false;
+	SetDisabledDisplay();
+}
+
+const bool Button::IsEnabled() const
+{
+	return enabled;
+}
+
 void Button::Draw(sf::RenderWindow& wnd)
 {
 	wnd.draw(shape);
@@ -29,16 +46,37 @@ void Button::Draw(sf::RenderWindow& wnd)
 
 void Button::MouseHoverEffect(const bool mouseIsHovering)
 {
-	if (mouseIsHovering)
+	if (!enabled)
 	{
-		shape.setFillColor(BLACK);
-		centerText.setFillColor(textColor);
-		shape.setOutlineColor(textColor);
+		SetDisabledDisplay();
+	}
+	else if(mouseIsHovering)
+	{
+		SetHoverDisplay();
 	}
 	else
 	{
-		shape.setFillColor(textColor);
-		centerText.setFillColor(BLACK);
-		shape.setOutlineColor(BLACK);
+		SetStandardDisplay();
 	}
+}
+
+void Button::SetStandardDisplay()
+{
+	shape.setFillColor(textColor);
+	centerText.setFillColor(BLACK);
+	shape.setOutlineColor(BLACK);
+}
+
+void Button::SetHoverDisplay()
+{
+	shape.setFillColor(BLACK);
+	centerText.setFillColor(textColor);
+	shape.setOutlineColor(textColor);
+}
+
+void Button::SetDisabledDisplay()
+{
+	shape.setFillColor(LIGHTGRAY);
+	centerText.setFillColor(BLACK);
+	shape.setOutlineColor(BLACK);
 }
