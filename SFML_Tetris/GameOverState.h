@@ -11,7 +11,7 @@ public:
 
 	void Init();
 	void HandleInput();
-	void HandleInput(sf::Event event);
+	void HandleInput(const sf::Event& event);
 	void Update(float dt);
 	void Draw();
 
@@ -27,12 +27,12 @@ private:
 	std::shared_ptr<GameData> gameData;
 	TextBox gameOverTxtBox;
 	Button newGameBtn;
-	int newScore;
+	unsigned int newScore;
 	bool scoreSet = false;
 	bool scoreHolderSet = false;
 	bool saveNewScore = false;
 	bool switchColor = true;
-	int newScoreindex = 0;
+	unsigned int newScoreindex = 0;
 	float lastFlash = 0.f;
 	std::string scoreHolder = "";
 	std::vector<std::pair<std::string, unsigned int>> highScores;

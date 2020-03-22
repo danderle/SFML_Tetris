@@ -31,7 +31,7 @@ void GameOverState::HandleInput()
 	}
 }
 
-void GameOverState::HandleInput(sf::Event event)
+void GameOverState::HandleInput(const sf::Event& event)
 {
 	if(saveNewScore)
 	{
@@ -185,7 +185,7 @@ void GameOverState::SetGuiElementPositions()
 	gameOverTxtBox.SetPosition({ (WINDOW_WIDTH - TEXTBOX_WIDTH) / 2, TEXTBOX_HEIGHT });
 	float yStartPosition = gameOverTxtBox.GetPosition().y + gameOverTxtBox.GetRect().height;
 	float padding = 20.f;
-	for (int i = 0; i < scoreTexts.size(); i++)
+	for (unsigned int i = 0; i < scoreTexts.size(); i++)
 	{
 		float yNextPosition = (i * scoreTexts[i].getCharacterSize()) + padding * (i + 1);
 		scoreTexts[i].setPosition((WINDOW_WIDTH - scoreTexts[i].getLocalBounds().width) / 2, yStartPosition + yNextPosition);
