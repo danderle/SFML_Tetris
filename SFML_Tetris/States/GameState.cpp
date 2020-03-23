@@ -83,8 +83,8 @@ void GameState::HandleInput(const sf::Event& event)
 		textBoxes.push_back(linesClearedTxtBox);
 		textBoxes.push_back(droughtTxtBox);
 		textBoxes.push_back(levelTxtBox);
-		//gameData->machine.AddState(std::make_unique<PauseState>(gameData, field, textBoxes, preview), false);
-		gameData->machine.AddState(std::make_unique<GameOverState>(gameData, 40), false);
+		gameData->machine.AddState(std::make_unique<PauseState>(gameData, field, textBoxes, preview), false);
+		//gameData->machine.AddState(std::make_unique<GameOverState>(gameData, 40), false);
 	}
 }
 
