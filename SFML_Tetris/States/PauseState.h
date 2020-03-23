@@ -16,6 +16,13 @@ public:
 	void Draw();
 
 private:
+	void SetupButtons(const sf::Font& font);
+	void SetupTextBoxes(const sf::Font& font);
+	void CheckButtonHover();
+	void CheckButtonClick();
+	void SetGuiElementPositions();
+
+private:
 	std::shared_ptr<GameData> gameData;
 	Field field;
 	std::vector<TextBox> textBoxes;
