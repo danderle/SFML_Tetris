@@ -1,5 +1,5 @@
 #include "Button.h"
-#include <DEFINITIONS.h>
+#include "DEFINITIONS.h"
 
 Button::Button(float width, float height, const sf::Color backColor)
 	: Button({ width, height }, { 0, 0 }, backColor)
