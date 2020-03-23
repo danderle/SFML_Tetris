@@ -62,7 +62,7 @@ void Button::MouseHoverEffect(const bool mouseIsHovering)
 
 void Button::SetStandardDisplay()
 {
-	shape.setFillColor(textColor);
+	shape.setFillColor(backColor);
 	centerText.setFillColor(BLACK);
 	shape.setOutlineColor(BLACK);
 }
@@ -70,8 +70,8 @@ void Button::SetStandardDisplay()
 void Button::SetHoverDisplay()
 {
 	shape.setFillColor(BLACK);
-	centerText.setFillColor(textColor);
-	shape.setOutlineColor(textColor);
+	centerText.setFillColor(backColor);
+	shape.setOutlineColor(outlineColor);
 }
 
 void Button::SetDisabledDisplay()
