@@ -23,12 +23,8 @@ void GameOverState::Init()
 
 void GameOverState::HandleInput()
 {
-	newGameBtn.MouseHoverEffect(gameData->input.IsHovering(newGameBtn.GetRect(), gameData->window));
-	if (newGameBtn.IsEnabled() && 
-		gameData->input.IsRectClicked(newGameBtn.GetRect(), sf::Mouse::Left, gameData->window))
-	{
-		gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
-	}
+	CheckButtonHover();
+	CheckButtonClick();
 }
 
 void GameOverState::HandleInput(const sf::Event& event)
@@ -192,4 +188,18 @@ void GameOverState::SetGuiElementPositions()
 	}
 	yStartPosition = scoreTexts.back().getPosition().y + scoreTexts.back().getLocalBounds().height + 20;
 	newGameBtn.SetPosition({ gameOverTxtBox.GetPosition().x, yStartPosition });
+}
+
+void GameOverState::CheckButtonHover()
+{
+	newGameBtn.MouseHoverEffect(gameData->input.IsHovering(newGameBtn.GetRect(), gameData->window));
+}
+
+void GameOverState::CheckButtonClick()
+{
+	if (newGameBtn.IsEnabled() &&
+		gameData->input.IsRectClicked(newGameBtn.GetRect(), sf::Mouse::Left, gameData->window))
+	{
+		gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
+	}
 }

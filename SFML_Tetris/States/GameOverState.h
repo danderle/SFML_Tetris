@@ -22,6 +22,8 @@ private:
 	void SetupHighScoreTexts(const sf::Font& font);
 	void SetupButtons(const sf::Font& font);
 	void SetGuiElementPositions();
+	void CheckButtonHover();
+	void CheckButtonClick();
 
 private:
 	std::shared_ptr<GameData> gameData;
