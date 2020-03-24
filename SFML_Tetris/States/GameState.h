@@ -21,6 +21,9 @@ private:
 	void MoveTetriminoOrPlaceOnField();
 	void SetupTextBox();
 	void UpdateTextBox();
+	void GetNextTetrimino();
+	void CreateNextTetrimino();
+	void CopyTextBoxesAndOpenPauseState();
 
 private:
 	std::shared_ptr<GameData> gameData;

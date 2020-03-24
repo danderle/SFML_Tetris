@@ -17,16 +17,14 @@ GameState::GameState(std::shared_ptr<GameData> _gameData)
 	levelTxtBox(WINDOW_WIDTH - Field::TotalWidth - TextBox::Margin, WINDOW_HEIGHT / 6, BLACK),
 	preview(nextTxtBox)
 {
-	SetupTextBox();
 }
 
 void GameState::Init()
 {
-	tetrimino = factory.CreateTetrimino();
-	droughtCount += tetrimino->IsI() ? -1 * droughtCount : 1;
-	nextTetrimino = factory.CreateTetrimino();
-	preview.SetNext(*nextTetrimino);
-	preview.Center();
+	SetupTextBox();
+	CreateNextTetrimino();
+	GetNextTetrimino();
+	CreateNextTetrimino();
 }
 
 void GameState::HandleInput()
@@ -55,7 +53,7 @@ void GameState::HandleInput(const sf::Event& event)
 	{
 		if (field.CanMoveLeft(*tetrimino))
 		{
-			std::cout << "Left \n";
+			std::cout << "Left\n";
 			tetrimino->MoveLeft();
 		}
 	}
@@ -63,7 +61,7 @@ void GameState::HandleInput(const sf::Event& event)
 	{
 		if (field.CanMoveRight(*tetrimino))
 		{
-			std::cout << "Right \n";
+			std::cout << "Right\n";
 			tetrimino->MoveRight();
 		}
 	}
@@ -77,14 +75,7 @@ void GameState::HandleInput(const sf::Event& event)
 	}
 	else if (gameData->input.KeyHit(sf::Keyboard::Key::Space))
 	{
-		std::vector<TextBox> textBoxes;
-		textBoxes.push_back(scoreTxtBox);
-		textBoxes.push_back(nextTxtBox);
-		textBoxes.push_back(linesClearedTxtBox);
-		textBoxes.push_back(droughtTxtBox);
-		textBoxes.push_back(levelTxtBox);
-		gameData->machine.AddState(std::make_unique<PauseState>(gameData, field, textBoxes, preview), false);
-		//gameData->machine.AddState(std::make_unique<GameOverState>(gameData, 40), false);
+		CopyTextBoxesAndOpenPauseState();
 	}
 }
 
@@ -96,18 +87,12 @@ void GameState::Update(float dt)
 	}
 	else
 	{
+		field.ShowOnField(*tetrimino);
 		moveTimePassed += dt;
 		if (moveTimePassed > fallingSpeed)
 		{
 			moveTimePassed = 0;
 			MoveTetriminoOrPlaceOnField();
-		}
-		field.ShowOnField(*tetrimino);
-		if (field.FindFullRows())
-		{
-			field.UpdatePoints(currentScore, linesCleared, level);
-			fallingSpeed = startSpeed - (0.03f * level);
-			UpdateTextBox();
 		}
 	}
 }
@@ -115,13 +100,16 @@ void GameState::Update(float dt)
 void GameState::Draw()
 {
 	gameData->window.clear();
+
 	field.Draw(gameData->window);
+
 	scoreTxtBox.Draw(gameData->window);
 	nextTxtBox.Draw(gameData->window);
 	linesClearedTxtBox.Draw(gameData->window);
 	droughtTxtBox.Draw(gameData->window);
 	levelTxtBox.Draw(gameData->window);
 	preview.Draw(gameData->window);
+
 	gameData->window.display();
 }
 
@@ -142,18 +130,14 @@ void GameState::MoveTetriminoOrPlaceOnField()
 		}
 		field.ClearFieldAndSaveLastPosition();
 		field.PlaceLastPositionOnField(tetrimino->GetColor());
-		tetrimino = std::move(nextTetrimino);
-		droughtCount += tetrimino->IsI() ? -1 * droughtCount : 1;
-		if (droughtCount > 15)
+		if (field.FindFullRows())
 		{
-			droughtTxtBox.SetTextColor(RED);
+			field.UpdatePoints(currentScore, linesCleared, level);
+			fallingSpeed = startSpeed - (0.03f * level);
+			UpdateTextBox();
 		}
-		else
-		{
-			droughtTxtBox.SetTextColor(WHITE);
-		}
-		nextTetrimino = factory.CreateTetrimino();
-		preview.SetNext(*nextTetrimino);
+		GetNextTetrimino();
+		CreateNextTetrimino();
 	}
 }
 
@@ -220,4 +204,38 @@ void GameState::UpdateTextBox()
 	linesClearedTxtBox.SetContent(std::to_string(linesCleared), Alignment::CENTER);
 	droughtTxtBox.SetContent(std::to_string(droughtCount), Alignment::CENTER);
 	levelTxtBox.SetContent(std::to_string(level), Alignment::CENTER);
+}
+
+void GameState::GetNextTetrimino()
+{
+	tetrimino = std::move(nextTetrimino);
+	droughtCount += tetrimino->IsI() ? -1 * droughtCount : 1;
+	if (droughtCount > 15)
+	{
+		droughtTxtBox.SetTextColor(RED);
+	}
+	else
+	{
+		droughtTxtBox.SetTextColor(WHITE);
+	}
+	droughtTxtBox.SetContent(std::to_string(droughtCount), Alignment::CENTER);
+}
+
+void GameState::CreateNextTetrimino()
+{
+	nextTetrimino = factory.CreateTetrimino();
+	preview.SetNext(*nextTetrimino);
+	preview.Center();
+}
+
+void GameState::CopyTextBoxesAndOpenPauseState()
+{
+	std::vector<TextBox> textBoxes;
+	textBoxes.push_back(scoreTxtBox);
+	textBoxes.push_back(nextTxtBox);
+	textBoxes.push_back(linesClearedTxtBox);
+	textBoxes.push_back(droughtTxtBox);
+	textBoxes.push_back(levelTxtBox);
+	gameData->machine.AddState(std::make_unique<PauseState>(gameData, field, textBoxes, preview), false);
+	//gameData->machine.AddState(std::make_unique<GameOverState>(gameData, 40), false);
 }
