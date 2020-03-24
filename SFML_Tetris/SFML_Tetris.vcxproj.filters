@@ -129,4 +129,20 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Dlls\openal32.dll" />
+    <None Include="Dlls\sfml-audio-2.dll" />
+    <None Include="Dlls\sfml-audio-d-2.dll" />
+    <None Include="Dlls\sfml-graphics-2.dll" />
+    <None Include="Dlls\sfml-graphics-d-2.dll" />
+    <None Include="Dlls\sfml-network-2.dll" />
+    <None Include="Dlls\sfml-network-d-2.dll" />
+    <None Include="Dlls\sfml-system-2.dll" />
+    <None Include="Dlls\sfml-system-d-2.dll" />
+    <None Include="Dlls\sfml-window-2.dll" />
+    <None Include="Dlls\sfml-window-d-2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="HighScores.txt" />
+  </ItemGroup>
 </Project>

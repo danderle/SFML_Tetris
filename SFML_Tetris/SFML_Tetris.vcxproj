@@ -87,12 +87,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\States;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\GameStateMachine;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\Dlls;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\States;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\GameStateMachine;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\lib;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\Dlls;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\lib;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -119,14 +119,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\States;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\GameStateMachine;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\Dlls;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\States;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\GameStateMachine;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\lib;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\Dlls;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\lib;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-network.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -138,14 +138,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\GameStateMachine;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\Resources;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\States;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\Dlls;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\GameStateMachine;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\Resources;C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\States;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\lib;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\beach\C++ Development\SFML_Tetris\SFML_Tetris\Dlls;C:\Users\beach\C++ Development\Frameworks\SFML-2.5.1\lib;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-network.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -189,6 +189,22 @@
     <ClInclude Include="Tetrimino.h" />
     <ClInclude Include="TetriminoFactory.h" />
     <ClInclude Include="TextBox.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dlls\openal32.dll" />
+    <None Include="Dlls\sfml-audio-2.dll" />
+    <None Include="Dlls\sfml-audio-d-2.dll" />
+    <None Include="Dlls\sfml-graphics-2.dll" />
+    <None Include="Dlls\sfml-graphics-d-2.dll" />
+    <None Include="Dlls\sfml-network-2.dll" />
+    <None Include="Dlls\sfml-network-d-2.dll" />
+    <None Include="Dlls\sfml-system-2.dll" />
+    <None Include="Dlls\sfml-system-d-2.dll" />
+    <None Include="Dlls\sfml-window-2.dll" />
+    <None Include="Dlls\sfml-window-d-2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="HighScores.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
