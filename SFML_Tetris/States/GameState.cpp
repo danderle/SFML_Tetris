@@ -40,6 +40,10 @@ void GameState::HandleInput(const sf::Event& event)
 		{
 			tetrimino->RotateRight();
 		}
+		else
+		{
+			gameData->assets.GetSound(SELECTION_SOUND).play();
+		}
 	}
 	else if (event.key.code == sf::Keyboard::D)
 	{
@@ -48,12 +52,17 @@ void GameState::HandleInput(const sf::Event& event)
 		{
 			tetrimino->RotateLeft();
 		}
+		else
+		{
+			gameData->assets.GetSound(SELECTION_SOUND).play();
+		}
 	}
 	else if (event.key.code == sf::Keyboard::Left)
 	{
 		if (field.CanMoveLeft(*tetrimino))
 		{
 			tetrimino->MoveLeft();
+			gameData->assets.GetSound(FALL_SOUND).play();
 		}
 	}
 	else if (event.key.code == sf::Keyboard::Right)
@@ -61,6 +70,7 @@ void GameState::HandleInput(const sf::Event& event)
 		if (field.CanMoveRight(*tetrimino))
 		{
 			tetrimino->MoveRight();
+			gameData->assets.GetSound(FALL_SOUND).play();
 		}
 	}
 	else if (event.key.code == sf::Keyboard::Key::Down)
@@ -120,11 +130,29 @@ void GameState::MoveTetriminoOrPlaceOnField()
 	if (field.CanMoveDown(*tetrimino))
 	{
 		tetrimino->MoveDown();
+		gameData->assets.GetSound(FALL_SOUND).play();
 	}
 	else
 	{
 		if (tetrimino->GetRow() == Tetrimino::StartingRow)
 		{
+			sf::Sound sound;
+			sound = gameData->assets.GetSound(GAMEOVER_SOUND);
+			sound.play();
+			bool playing = true;
+			while (playing)
+			{
+				auto status = sound.getStatus();
+				switch (status)
+				{
+				case sf::Sound::Playing:
+					Draw();
+					break;
+				default:
+					playing = false;
+					break;
+				}
+			}
 			gameData->machine.AddState(std::make_unique<GameOverState>(gameData, currentScore));
 		}
 		field.ClearFieldAndSaveLastPosition();
