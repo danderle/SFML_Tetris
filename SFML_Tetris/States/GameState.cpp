@@ -53,7 +53,6 @@ void GameState::HandleInput(const sf::Event& event)
 	{
 		if (field.CanMoveLeft(*tetrimino))
 		{
-			std::cout << "Left\n";
 			tetrimino->MoveLeft();
 		}
 	}
@@ -61,7 +60,6 @@ void GameState::HandleInput(const sf::Event& event)
 	{
 		if (field.CanMoveRight(*tetrimino))
 		{
-			std::cout << "Right\n";
 			tetrimino->MoveRight();
 		}
 	}
@@ -70,6 +68,7 @@ void GameState::HandleInput(const sf::Event& event)
 		if (!field.IsFlashing())
 		{
 			moveTimePassed = 0;
+			field.ShowOnField(*tetrimino);
 			MoveTetriminoOrPlaceOnField();
 		}
 	}
