@@ -14,6 +14,7 @@ public:
 	void MoveRight();
 	void RotateLeft();
 	void RotateRight();
+	void AdjustIMove();
 	int GetRow() const;
 	int GetColumn() const;
 	int GetWidth() const;
@@ -26,8 +27,10 @@ public:
 	static constexpr int StartingRow = -1;
 
 private:
-	int rowPos;
-	int colPos;
+	int rowPos = -1;
+	int colPos = 4;
+	bool isI;
+	bool horizontal = true;
 	std::vector<std::vector<bool>> type;
 	sf::Color color;
 };

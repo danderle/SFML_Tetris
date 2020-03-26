@@ -3,10 +3,9 @@
 Tetrimino::Tetrimino(std::vector<std::vector<bool>> _type, sf::Color _color)
 	:
 	type(_type),
-	color(_color),
-	rowPos(-1),
-	colPos(4)
+	color(_color)
 {
+	isI = type.size() == 1;
 }
 
 void Tetrimino::MoveDown()
@@ -38,6 +37,10 @@ void Tetrimino::RotateLeft()
 		typeRotated.push_back(newRow);
 	}
 	type = typeRotated;
+	if (IsI())
+	{
+		AdjustIMove();
+	}
 }
 
 void Tetrimino::RotateRight()
@@ -53,6 +56,23 @@ void Tetrimino::RotateRight()
 		typeRotated.push_back(newRow);
 	}
 	type = typeRotated;
+	if (IsI())
+	{
+		AdjustIMove();
+	}
+}
+
+void Tetrimino::AdjustIMove()
+{
+	horizontal = horizontal ? false : true;
+	if (horizontal)
+	{
+		MoveLeft();
+	}
+	else
+	{
+		MoveRight();
+	}
 }
 
 int Tetrimino::GetRow() const
@@ -77,7 +97,7 @@ int Tetrimino::GetHeight() const
 
 const bool Tetrimino::IsI() const
 {
-	return type.size() == 1;
+	return isI;
 }
 
 std::vector<std::vector<bool>> Tetrimino::GetPosition() const
