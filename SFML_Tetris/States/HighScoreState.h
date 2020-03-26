@@ -32,5 +32,6 @@ protected:
 
 private:
 	Button backBtn;
+	sf::Text top10Text;
 };
 

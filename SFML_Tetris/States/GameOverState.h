@@ -29,6 +29,7 @@ private:
 	std::shared_ptr<GameData> gameData;
 	TextBox gameOverTxtBox;
 	Button newGameBtn;
+	sf::Text top10Text;
 	unsigned int newScore;
 	bool scoreSet = false;
 	bool scoreHolderSet = false;
