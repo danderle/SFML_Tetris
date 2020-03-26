@@ -35,6 +35,7 @@ void HighScoreState::Draw()
 {
 	gameData->window.clear();
 	backBtn.Draw(gameData->window);
+	gameData->window.draw(top10Text);
 	for (auto text : highScoreTexts)
 	{
 		gameData->window.draw(text);
@@ -77,15 +78,27 @@ void HighScoreState::CheckButtonClick()
 
 void HighScoreState::SetupHighScoreTexts(const sf::Font& font)
 {
+	sf::Text text;
+	text.setFont(font);
+	text.setFillColor(RED);
+	unsigned int max = 0;
 	for (auto& score : highScores)
 	{
-		sf::Text text;
-		text.setFont(font);
-		text.setFillColor(RED);
-		std::string setString = score.first + "                     " + std::to_string(score.second);
+		std::string number = std::to_string(score.second);
+		max = max < number.size() ? number.size() : max;
+		std::string spacer = "";
+		unsigned int diff = max - number.size();
+		while (spacer.size() <= diff)
+		{
+			spacer.push_back(' ');
+		}
+		std::string setString = score.first + "                " + spacer + number;
 		text.setString(setString);
 		highScoreTexts.push_back(text);
 	}
+	top10Text.setFont(font);
+	top10Text.setFillColor(RED);
+	top10Text.setString("Top 10");
 }
 
 void HighScoreState::SetupButtons(const sf::Font& font)
@@ -99,11 +112,15 @@ void HighScoreState::SetupButtons(const sf::Font& font)
 void HighScoreState::SetGuiElementPositions()
 {
 	backBtn.SetPosition({ WINDOW_WIDTH - backBtn.GetRect().width, 0 });
-	float yStartPosition = WINDOW_HEIGHT / 4;
+	float yStartPosition = WINDOW_HEIGHT / 7;
 	float padding = 20.f;
+	float width = top10Text.getGlobalBounds().width;
+	top10Text.setPosition((WINDOW_WIDTH - width) / 2, yStartPosition);
+	yStartPosition = yStartPosition + top10Text.getCharacterSize() + padding;
+	float xStartPosition = highScoreTexts.size() > 0 ? (WINDOW_WIDTH - highScoreTexts[0].getLocalBounds().width) / 2 : 0;
 	for (unsigned int i = 0; i < highScoreTexts.size(); i++)
 	{
 		float yNextPosition = (i * highScoreTexts[i].getCharacterSize()) + padding * (i + 1);
-		highScoreTexts[i].setPosition((WINDOW_WIDTH - highScoreTexts[i].getLocalBounds().width) / 2, yStartPosition + yNextPosition);
+		highScoreTexts[i].setPosition(xStartPosition, yStartPosition + yNextPosition);
 	}
 }

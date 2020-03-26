@@ -97,6 +97,7 @@ void GameOverState::Draw()
 	gameData->window.clear();
 	newGameBtn.Draw(gameData->window);
 	gameOverTxtBox.Draw(gameData->window);
+	gameData->window.draw(top10Text);
 	for (auto text : scoreTexts)
 	{
 		gameData->window.draw(text);
@@ -157,15 +158,27 @@ void GameOverState::SetNewHighScore()
 
 void GameOverState::SetupHighScoreTexts(const sf::Font& font)
 {
+	sf::Text text;
+	text.setFont(font);
+	text.setFillColor(RED);
+	unsigned int max = 0;
 	for (unsigned int i = 0; i < 10 && i < highScores.size(); i++)
 	{
-		sf::Text text;
-		text.setFont(font);
-		text.setFillColor(RED);
-		std::string setString = highScores[i].first + "                     " + std::to_string(highScores[i].second);
+		std::string number = std::to_string(highScores[i].second);
+		max = max < number.size() ? number.size() : max;
+		std::string spacer = "";
+		unsigned int diff = max - number.size();
+		while (spacer.size() <= diff)
+		{
+			spacer.push_back(' ');
+		}
+		std::string setString = highScores[i].first + "                " + spacer + number;
 		text.setString(setString);
 		scoreTexts.push_back(text);
 	}
+	top10Text.setFont(font);
+	top10Text.setFillColor(RED);
+	top10Text.setString("Top 10");
 }
 
 void GameOverState::SetupButtons(const sf::Font& font)
@@ -179,14 +192,19 @@ void GameOverState::SetupButtons(const sf::Font& font)
 void GameOverState::SetGuiElementPositions()
 {
 	gameOverTxtBox.SetPosition({ (WINDOW_WIDTH - TEXTBOX_WIDTH) / 2, TEXTBOX_HEIGHT });
-	float yStartPosition = gameOverTxtBox.GetPosition().y + gameOverTxtBox.GetRect().height;
+
 	float padding = 20.f;
+	float yStartPosition = gameOverTxtBox.GetPosition().y + gameOverTxtBox.GetRect().height + padding;
+	top10Text.setPosition((WINDOW_WIDTH - top10Text.getGlobalBounds().width) / 2, yStartPosition);
+	yStartPosition = yStartPosition + top10Text.getCharacterSize() + padding;
+	float xStartPosition = scoreTexts.size() > 0 ? (WINDOW_WIDTH - scoreTexts[0].getLocalBounds().width) / 2 : 0;
 	for (unsigned int i = 0; i < scoreTexts.size(); i++)
 	{
 		float yNextPosition = (i * scoreTexts[i].getCharacterSize()) + padding * (i + 1);
-		scoreTexts[i].setPosition((WINDOW_WIDTH - scoreTexts[i].getLocalBounds().width) / 2, yStartPosition + yNextPosition);
+		scoreTexts[i].setPosition(xStartPosition, yStartPosition + yNextPosition);
 	}
-	yStartPosition = scoreTexts.back().getPosition().y + scoreTexts.back().getLocalBounds().height + 20;
+	yStartPosition = scoreTexts.back().getPosition().y + scoreTexts.back().getLocalBounds().height + padding * 2;
+	
 	newGameBtn.SetPosition({ gameOverTxtBox.GetPosition().x, yStartPosition });
 }
 
