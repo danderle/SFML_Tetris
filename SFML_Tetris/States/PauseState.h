@@ -16,7 +16,6 @@ public:
 	void Draw();
 
 private:
-	void SetupButtons(const sf::Font& font);
 	void SetupTextBoxes(const sf::Font& font);
 	void CheckButtonHover();
 	void CheckButtonClick();
@@ -28,6 +27,5 @@ private:
 	std::vector<TextBox> textBoxes;
 	Preview preview;
 	TextBox pauseTxtBox;
-	Button resumeBtn;
 };
 
