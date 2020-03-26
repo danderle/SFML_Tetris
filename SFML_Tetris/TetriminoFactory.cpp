@@ -10,7 +10,7 @@ TetriminoFactory::TetriminoFactory()
 
 std::unique_ptr<Tetrimino> TetriminoFactory::CreateTetrimino()
 {
-	int cIndex = colorIndex(rng);
 	int tIndex = typeIndex(rng);
+	int cIndex = colorIndex(rng);
 	return std::make_unique<Tetrimino>(types[tIndex], colors[cIndex]);
 }
