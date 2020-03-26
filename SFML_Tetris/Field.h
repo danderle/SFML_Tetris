@@ -46,12 +46,14 @@ private:
 	float totalFlashTime = 0.f;
 	int colorChanger = 10;
 	static constexpr float flashTime = 1.f;
-	static constexpr int columns = 10;
-	static constexpr int rows = 24;
+
 public:
+	static constexpr int Columns = 10;
+	static constexpr int Rows = 24;
+	static constexpr int GridSize = Rows * Columns;
 	static constexpr int FrameThickness = 18;
-	static constexpr int Width = columns * Cell::Dimensions;
-	static constexpr int Height = rows * Cell::Dimensions;
+	static constexpr int Width = Columns * Cell::Dimensions;
+	static constexpr int Height = Rows * Cell::Dimensions;
 	static constexpr int TotalWidth = 2 * FrameThickness + Width;
 };
 
