@@ -27,3 +27,27 @@ sf::Font& AssetManager::GetFont(std::string name)
 {
 	return fonts.at(name);
 }
+
+void AssetManager::LoadSound(std::string name, std::string fileName)
+{
+	sf::SoundBuffer buffer;
+	if (buffer.loadFromFile(fileName))
+	{
+		soundbuffers.emplace(name, buffer);
+		sf::Sound sound;
+		sound.setBuffer(GetSoundBuffer(name));
+		sounds.emplace(name, sound);
+	}
+
+}
+
+sf::SoundBuffer& AssetManager::GetSoundBuffer(std::string name)
+{
+	return soundbuffers.at(name);
+}
+
+sf::Sound& AssetManager::GetSound(std::string name)
+{
+	sf::Sound sound;
+	return sounds.at(name);
+}
