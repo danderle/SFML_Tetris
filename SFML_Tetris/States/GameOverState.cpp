@@ -65,6 +65,7 @@ void GameOverState::HandleInput(const sf::Event& event)
 			std::ofstream outStream("HighScores.txt");
 			for (auto highScore : highScores)
 			{
+				highScore.first = highScore.first.empty() ? "XXX" : highScore.first;
 				outStream << highScore.first << " " << std::to_string(highScore.second) << std::endl;
 			}
 			outStream.close();
@@ -110,10 +111,10 @@ void GameOverState::Draw()
 void GameOverState::SetupTextBoxes(const sf::Font& font)
 {
 	gameOverTxtBox.SetFont(font, CHARACTER_SIZE);
-	gameOverTxtBox.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 });
 	gameOverTxtBox.SetContent("GAME OVER", Alignment::CENTER);
+	gameOverTxtBox.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 });
 	gameOverTxtBox.SetTextColor(BLACK);
-	gameOverTxtBox.SetOutline(BLACK, OUTLINE_THICKNESS);
+	gameOverTxtBox.SetOutlineColor(BLACK, OUTLINE_THICKNESS);
 }
 
 void GameOverState::LoadHighScores()
@@ -183,10 +184,7 @@ void GameOverState::SetupHighScoreTexts(const sf::Font& font)
 
 void GameOverState::SetupButtons(const sf::Font& font)
 {
-	newGameBtn.SetFont(font, CHARACTER_SIZE);
-	newGameBtn.SetOutline(GREEN, OUTLINE_THICKNESS);
-	newGameBtn.SetContent("NEW GAME", Alignment::CENTER);
-	newGameBtn.SetTextColor(GREEN);
+	newGameBtn.SetTemplate(font, "Main Menu");
 }
 
 void GameOverState::SetGuiElementPositions()
