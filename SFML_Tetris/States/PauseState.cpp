@@ -51,7 +51,7 @@ void PauseState::SetupTextBoxes(const sf::Font& font)
 	pauseTxtBox.SetFont(font, CHARACTER_SIZE);
 	pauseTxtBox.SetContent("GAME PAUSED", Alignment::CENTER);
 	pauseTxtBox.SetTextColor(BLACK);
-	pauseTxtBox.SetOutline(BLACK, OUTLINE_THICKNESS);
+	pauseTxtBox.SetOutlineColor(BLACK, OUTLINE_THICKNESS);
 }
 
 void PauseState::CheckButtonHover()
