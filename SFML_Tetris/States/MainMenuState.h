@@ -24,9 +24,10 @@ private:
 private:
 	std::shared_ptr<GameData> gameData;
 	Button playButton;
+	Button settingsBtn;
 	Button highScoresBtn;
 
-	static constexpr float margin = 30;
+	static constexpr float margin = 30.f;
 
 };
 
