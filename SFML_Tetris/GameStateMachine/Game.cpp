@@ -27,6 +27,10 @@ void Game::Run()
 			{
 				gameData->machine.GetActiveState()->HandleInput(event);
 			}
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+				gameData->machine.GetActiveState()->HandleInput(event);
+			}
 		}
 		gameData->machine.ProcessStateChanges();
 		frameTime = clock.restart().asSeconds();
@@ -59,7 +63,7 @@ void Game::LoadAssets()
 	gameData->assets.LoadSound(FALL_SOUND, FALL_SOUND_PATH);
 	gameData->assets.LoadSound(GAMEOVER_SOUND, GAMEOVER_SOUND_PATH);
 	gameData->assets.LoadSound(LINE_SOUND, LINE_SOUND_PATH);
-	/*gameData->assets.LoadSound(TETRIS_SOUND, TETRIS_SOUND_PATH);
+	gameData->assets.LoadSound(TETRIS_SOUND, TETRIS_SOUND_PATH);
 	gameData->assets.LoadSound(SPLASH_SOUND, SPLASH_SOUND_PATH);
-	gameData->assets.LoadSound(THEME_SOUND, THEME_SOUND_PATH);*/
+	//gameData->assets.LoadSound(THEME_SOUND, THEME_SOUND_PATH);
 }
