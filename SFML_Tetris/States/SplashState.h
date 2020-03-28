@@ -15,13 +15,7 @@ public:
 	void Draw();
 
 private:
-	const std::string splashScreenTexture = "Splash";
-	static constexpr int displayTime = 0;
-
-	float timePassed = 0.f;
-
 	std::shared_ptr<GameData> gameData;
-	std::string  test = "Test";
 	sf::Sprite splashScreenSprite;
 };
 
