@@ -129,7 +129,10 @@ void GameOverState::LoadHighScores()
 		unsigned int score = 0;
 		ss >> name;
 		ss >> score;
-		
+		while (name.size() < 3)
+		{
+			name.push_back(' ');
+		}
 		highScores.emplace_back(name, score);
 	}
 	inputStream.close();
