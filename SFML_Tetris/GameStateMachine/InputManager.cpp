@@ -5,14 +5,22 @@ bool InputManager::IsRectClicked(sf::Rect<float> rect, sf::Mouse::Button buttonP
 	bool isClicked = false;
 	if (sf::Mouse::isButtonPressed(buttonPressed))
 	{
-		auto msePosition = GetMousePosition(window);
-		if (rect.contains({ (float)msePosition.x, (float)msePosition.y }))
-		{
-			isClicked = true;
-		}
+		isClicked = IsRectClicked(rect, window);
 	}
 	return isClicked;
 }
+
+bool InputManager::IsRectClicked(sf::Rect<float> rect, sf::RenderWindow& window)
+{
+	bool isClicked = false;
+	auto msePosition = GetMousePosition(window);
+	if (rect.contains({ (float)msePosition.x, (float)msePosition.y }))
+	{
+		isClicked = true;
+	}
+	return isClicked;
+}
+
 
 bool InputManager::IsHovering(sf::Rect<float> rect, sf::RenderWindow& window)
 {
