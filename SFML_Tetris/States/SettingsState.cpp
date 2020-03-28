@@ -86,14 +86,14 @@ void SettingsState::CheckButtonClick(const sf::Event& event)
 		bool isClicked = gameData->input.IsRectClicked(musicBtn.GetRect(), gameData->window);
 		if (isClicked)
 		{
-			const float volume = gameData->assets.MusicOn() ? 0 : 100;
+			const float volume = gameData->assets.MusicOn() ? 0.f : 100.f;
 			gameData->assets.SetMusicVolume(volume);
 			SetButtonState(musicBtn, gameData->assets.MusicOn());
 		}
 		isClicked = gameData->input.IsRectClicked(soundBtn.GetRect(), gameData->window);
 		if (isClicked)
 		{
-			const float volume = gameData->assets.SoundsOn() ? 0 : 100;
+			const float volume = gameData->assets.SoundsOn() ? 0.f : 100.f;
 			gameData->assets.SetSoundsVolume(volume);
 			SetButtonState(soundBtn, gameData->assets.SoundsOn());
 		}

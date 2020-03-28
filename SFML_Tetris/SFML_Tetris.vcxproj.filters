@@ -89,9 +89,6 @@
     <ClInclude Include="GameStateMachine\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameStateMachine\State.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameStateMachine\StateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -132,6 +129,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="States\SettingsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateMachine\IState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\IGuiElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

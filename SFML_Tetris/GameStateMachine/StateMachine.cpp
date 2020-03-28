@@ -1,6 +1,6 @@
 #include "StateMachine.h"
 
-void StateMachine::AddState(std::unique_ptr<State> _newState, bool _isReplacing)
+void StateMachine::AddState(std::unique_ptr<IState> _newState, bool _isReplacing)
 {
 	isAdding = true;
 	isReplacing = _isReplacing;
@@ -43,7 +43,7 @@ void StateMachine::ProcessStateChanges()
 	
 }
 
-std::unique_ptr<State>& StateMachine::GetActiveState()
+std::unique_ptr<IState>& StateMachine::GetActiveState()
 {
 	return states.top();
 }

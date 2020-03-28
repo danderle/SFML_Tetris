@@ -1,8 +1,7 @@
 #pragma once 
 #include "Game.h"
-#include "State.h"
 
-class SplashState : public State
+class SplashState : public IState
 {
 public:
 	SplashState() = delete;

@@ -43,6 +43,22 @@ void HighScoreState::Draw()
 	gameData->window.display();
 }
 
+
+void HighScoreState::CheckButtonHover()
+{
+	bool isHovering = gameData->input.IsHovering(backBtn.GetRect(), gameData->window);
+	backBtn.MouseHoverEffect(isHovering);
+}
+
+void HighScoreState::CheckButtonClick()
+{
+	bool isClicked = gameData->input.IsRectClicked(backBtn.GetRect(), sf::Mouse::Left, gameData->window);
+	if (isClicked)
+	{
+		gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
+	}
+}
+
 void HighScoreState::LoadHighScores()
 {
 	std::ifstream inputStream(HIGHSCORE_PATH);
@@ -62,21 +78,6 @@ void HighScoreState::LoadHighScores()
 		highScores.emplace_back(name, score);
 	}
 	inputStream.close();
-}
-
-void HighScoreState::CheckButtonHover()
-{
-	bool isHovering = gameData->input.IsHovering(backBtn.GetRect(), gameData->window);
-	backBtn.MouseHoverEffect(isHovering);
-}
-
-void HighScoreState::CheckButtonClick()
-{
-	bool isClicked = gameData->input.IsRectClicked(backBtn.GetRect(), sf::Mouse::Left, gameData->window);
-	if (isClicked)
-	{
-		gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
-	}
 }
 
 void HighScoreState::SetupHighScoreTexts(const sf::Font& font)

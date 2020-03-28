@@ -1,29 +1,28 @@
 #pragma once
-#include "State.h"
+#include "IGuiElement.h"
 #include "Game.h"
-#include "Button.h"
 #include <sstream>
 #include <fstream>
 
-class HighScoreState : public State
+class HighScoreState : public IState, public IGuiElement
 {
 public:
 	HighScoreState() = delete;
 	HighScoreState(std::shared_ptr<GameData> _gameData);
 
-	void Init();
-	void HandleInput();
-	void HandleInput(const sf::Event& event);
-	void Update(float dt);
-	void Draw();
+	void Init() override;
+	void HandleInput() override;
+	void HandleInput(const sf::Event& event) override;
+	void Update(float dt) override;
+	void Draw() override;
 
 private:
-	void SetupButtons(const sf::Font& font);
+	void SetupButtons(const sf::Font& font) override;
+	void CheckButtonHover() override;
+	void CheckButtonClick() override;
+	void SetGuiElementPositions() override;
 	void LoadHighScores();
-	void CheckButtonHover();
-	void CheckButtonClick();
 	void SetupHighScoreTexts(const sf::Font& font);
-	void SetGuiElementPositions();
 
 protected:
 	std::shared_ptr<GameData> gameData;
