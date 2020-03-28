@@ -151,30 +151,9 @@ void Field::PlaceLastPositionOnField(const sf::Color tetriminoColor)
 	}
 }
 
-void Field::UpdatePoints(unsigned int& currentScore, unsigned int& linesCleared, unsigned int& level)
+const unsigned int Field::NumberOfClearedRows() const
 {
-	unsigned int numOfClearedRows = fullRows.size();
-	linesCleared += numOfClearedRows;
-	level = linesCleared / 10;
-	level = level == 0 ? 1 : level;
-	switch (numOfClearedRows)
-	{
-	case 1:
-		currentScore += 40 * level;
-		break;
-	case 2:
-		currentScore += 100 * level;
-		break;
-	case 3:
-		currentScore += 300 * level;
-		break;
-	case 4:
-		currentScore += 1200 * level;
-		break;
-	default:
-		currentScore += 0;
-	}
-	
+	return fullRows.size();
 }
 
 const bool Field::FindFullRows()

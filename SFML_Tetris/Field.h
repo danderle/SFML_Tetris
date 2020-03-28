@@ -18,7 +18,7 @@ public:
 	const bool CanRotate(Tetrimino& tetrimino) const;
 	void ClearFieldAndSaveLastPosition();
 	void PlaceLastPositionOnField(const sf::Color tetriminoColor);
-	void UpdatePoints(unsigned int& currentScore, unsigned int& linesCleared, unsigned int& level);
+	const unsigned int NumberOfClearedRows() const;
 	const bool FindFullRows();
 	const bool IsFlashing() const;
 	void FlashFullRows(const float dt);
