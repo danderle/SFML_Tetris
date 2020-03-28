@@ -25,6 +25,7 @@ void GameState::Init()
 	CreateNextTetrimino();
 	GetNextTetrimino();
 	CreateNextTetrimino();
+	gameData->assets.StartMusic(THEME_SOUND_PATH);
 }
 
 void GameState::HandleInput()
@@ -42,7 +43,7 @@ void GameState::HandleInput(const sf::Event& event)
 		}
 		else
 		{
-			gameData->assets.GetSound(SELECTION_SOUND).play();
+			gameData->assets.PlaySound(SELECTION_SOUND);
 		}
 	}
 	else if (event.key.code == sf::Keyboard::D)
@@ -54,7 +55,7 @@ void GameState::HandleInput(const sf::Event& event)
 		}
 		else
 		{
-			gameData->assets.GetSound(SELECTION_SOUND).play();
+			gameData->assets.PlaySound(SELECTION_SOUND);
 		}
 	}
 	else if (event.key.code == sf::Keyboard::Left)
@@ -62,7 +63,7 @@ void GameState::HandleInput(const sf::Event& event)
 		if (field.CanMoveLeft(*tetrimino))
 		{
 			tetrimino->MoveLeft();
-			gameData->assets.GetSound(FALL_SOUND).play();
+			gameData->assets.PlaySound(FALL_SOUND);
 		}
 	}
 	else if (event.key.code == sf::Keyboard::Right)
@@ -70,7 +71,7 @@ void GameState::HandleInput(const sf::Event& event)
 		if (field.CanMoveRight(*tetrimino))
 		{
 			tetrimino->MoveRight();
-			gameData->assets.GetSound(FALL_SOUND).play();
+			gameData->assets.PlaySound(FALL_SOUND);
 		}
 	}
 	else if (event.key.code == sf::Keyboard::Key::Down)
@@ -130,37 +131,32 @@ void GameState::MoveTetriminoOrPlaceOnField()
 	if (field.CanMoveDown(*tetrimino))
 	{
 		tetrimino->MoveDown();
-		gameData->assets.GetSound(FALL_SOUND).play();
+		gameData->assets.PlaySound(FALL_SOUND);
 	}
 	else
 	{
 		if (tetrimino->GetRow() == Tetrimino::StartingRow)
 		{
-			sf::Sound sound;
-			sound = gameData->assets.GetSound(GAMEOVER_SOUND);
-			sound.play();
-			bool playing = true;
-			while (playing)
-			{
-				auto status = sound.getStatus();
-				switch (status)
-				{
-				case sf::Sound::Playing:
-					Draw();
-					break;
-				default:
-					playing = false;
-					break;
-				}
-			}
+			gameData->assets.StopMusic();
+			gameData->assets.PlaySoundTillEnd(GAMEOVER_SOUND);
 			gameData->machine.AddState(std::make_unique<GameOverState>(gameData, currentScore));
 		}
 		field.ClearFieldAndSaveLastPosition();
 		field.PlaceLastPositionOnField(tetrimino->GetColor());
 		if (field.FindFullRows())
 		{
-			field.UpdatePoints(currentScore, linesCleared, level);
-			fallingSpeed = startSpeed - (0.03f * level);
+			auto numOfRows = field.NumberOfClearedRows();
+			linesCleared += numOfRows;
+			LevelUp();
+			AddPoints(numOfRows);
+			if (numOfRows == 4)
+			{
+				gameData->assets.PlaySound(TETRIS_SOUND);
+			}
+			else
+			{
+				gameData->assets.PlaySound(LINE_SOUND);
+			}
 			UpdateTextBox();
 		}
 		GetNextTetrimino();
@@ -179,7 +175,7 @@ void GameState::SetupTextBox()
 	text = std::to_string(currentScore);
 	scoreTxtBox.SetContent(text, Alignment::CENTER);
 	scoreTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, 25 });
-	scoreTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	scoreTxtBox.SetOutlineColor(LIGHTGRAY, outlineThickness);
 	scoreTxtBox.CenterTopText();
 	scoreTxtBox.CenterText();
 
@@ -188,7 +184,7 @@ void GameState::SetupTextBox()
 	nextTxtBox.SetContent(text, Alignment::TOP);
 	float yPos = scoreTxtBox.GetPosition().y + scoreTxtBox.GetRect().height + TextBox::Margin;
 	nextTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
-	nextTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	nextTxtBox.SetOutlineColor(LIGHTGRAY, outlineThickness);
 	nextTxtBox.CenterTopText();
 
 	linesClearedTxtBox .SetFont(font, charSize);
@@ -198,7 +194,7 @@ void GameState::SetupTextBox()
 	linesClearedTxtBox.SetContent(text, Alignment::CENTER);
 	yPos = nextTxtBox.GetPosition().y + nextTxtBox.GetRect().height + TextBox::Margin;
 	linesClearedTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
-	linesClearedTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	linesClearedTxtBox.SetOutlineColor(LIGHTGRAY, outlineThickness);
 	linesClearedTxtBox.CenterTopText();
 	linesClearedTxtBox.CenterText();
 
@@ -209,7 +205,7 @@ void GameState::SetupTextBox()
 	droughtTxtBox.SetContent(text, Alignment::CENTER);
 	yPos = linesClearedTxtBox.GetPosition().y + linesClearedTxtBox.GetRect().height + TextBox::Margin;
 	droughtTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
-	droughtTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	droughtTxtBox.SetOutlineColor(LIGHTGRAY, outlineThickness);
 	droughtTxtBox.CenterTopText();
 	droughtTxtBox.CenterText();
 
@@ -220,9 +216,37 @@ void GameState::SetupTextBox()
 	levelTxtBox.SetContent(text, Alignment::CENTER);
 	yPos = droughtTxtBox.GetPosition().y + droughtTxtBox.GetRect().height + TextBox::Margin;
 	levelTxtBox.SetPosition({ Field::TotalWidth + TextBox::Margin, yPos});
-	levelTxtBox.SetOutline(LIGHTGRAY, outlineThickness);
+	levelTxtBox.SetOutlineColor(LIGHTGRAY, outlineThickness);
 	levelTxtBox.CenterTopText();
 	levelTxtBox.CenterText();
+}
+
+void GameState::LevelUp()
+{
+	level = linesCleared / 10;
+	level = level == 0 ? 1 : level;
+	fallingSpeed = startSpeed - (0.03f * level);
+}
+
+void GameState::AddPoints(const unsigned int numOfClearedRows)
+{
+	switch (numOfClearedRows)
+	{
+	case 1:
+		currentScore += 40 * level;
+		break;
+	case 2:
+		currentScore += 100 * level;
+		break;
+	case 3:
+		currentScore += 300 * level;
+		break;
+	case 4:
+		currentScore += 1200 * level;
+		break;
+	default:
+		currentScore += 0;
+	}
 }
 
 void GameState::UpdateTextBox()

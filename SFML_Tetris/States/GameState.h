@@ -20,6 +20,8 @@ public:
 private:
 	void MoveTetriminoOrPlaceOnField();
 	void SetupTextBox();
+	void LevelUp();
+	void AddPoints(const unsigned int numOfClearedRows);
 	void UpdateTextBox();
 	void GetNextTetrimino();
 	void CreateNextTetrimino();
