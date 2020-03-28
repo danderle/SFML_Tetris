@@ -87,7 +87,7 @@ void TextBox::SetTextColor(sf::Color color)
 	centerText.setFillColor(textColor);
 }
 
-void TextBox::SetOutline(const sf::Color color, const float thickness)
+void TextBox::SetOutlineColor(const sf::Color color, const float thickness)
 {
 	outlineColor = color;
 	shape.setOutlineColor(outlineColor);
@@ -116,6 +116,28 @@ void TextBox::CenterText()
 const sf::Vector2f TextBox::GetPosition() const
 {
 	return shape.getPosition();
+}
+
+void TextBox::SetTemplate(const sf::Font& font, const std::string content)
+{
+	SetFont(font, CHARACTER_SIZE);
+	SetTextColor(GREEN);
+	SetOutlineColor(GREEN, OUTLINE_THICKNESS);
+	SetContent(content, Alignment::CENTER);
+}
+
+std::string TextBox::GetContent(const Alignment alignment)
+{
+	std::string text;
+	switch (alignment)
+	{
+	case Alignment::CENTER:
+		text = centerText.getString();
+		break;
+	case Alignment::TOP:
+		text = topText.getString();
+	}
+	return text;
 }
 
 void TextBox::Draw(sf::RenderWindow& wnd)

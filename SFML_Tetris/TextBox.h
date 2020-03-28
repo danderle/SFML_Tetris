@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "DEFINITIONS.h"
 
 enum class Alignment
 {
@@ -24,10 +25,12 @@ public:
 	void SetCenterAt(sf::Vector2f position);
 	void SetBackColor(const sf::Color backColor);
 	void SetTextColor(sf::Color color);
-	void SetOutline(const sf::Color color, const float thickness);
+	void SetOutlineColor(const sf::Color color, const float thickness);
 	void CenterTopText();
 	void CenterText();
 	const sf::Vector2f GetPosition() const;
+	void SetTemplate(const sf::Font& font, const std::string content);
+	std::string GetContent(const Alignment alignment);
 	virtual void Draw(sf::RenderWindow& wnd);
 
 public:
