@@ -55,7 +55,10 @@ void HighScoreState::LoadHighScores()
 		unsigned int score = 0;
 		ss >> name;
 		ss >> score;
-
+		while (name.size() < 3)
+		{
+			name.push_back(' ');
+		}
 		highScores.emplace_back(name, score);
 	}
 	inputStream.close();
@@ -103,10 +106,7 @@ void HighScoreState::SetupHighScoreTexts(const sf::Font& font)
 
 void HighScoreState::SetupButtons(const sf::Font& font)
 {
-	backBtn.SetFont(font, CHARACTER_SIZE);
-	backBtn.SetTextColor(GREEN);
-	backBtn.SetOutline(GREEN, OUTLINE_THICKNESS);
-	backBtn.SetContent("Back", Alignment::CENTER);
+	backBtn.SetTemplate(font, "Back");
 }
 
 void HighScoreState::SetGuiElementPositions()
