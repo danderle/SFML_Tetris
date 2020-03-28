@@ -34,6 +34,10 @@ void GameState::HandleInput()
 
 void GameState::HandleInput(const sf::Event& event)
 {
+	if (gameOver)
+	{
+		return;
+	}
 	if (event.key.code == sf::Keyboard::A)
 	{
 		tetrimino->RotateLeft();
@@ -91,18 +95,28 @@ void GameState::HandleInput(const sf::Event& event)
 
 void GameState::Update(float dt)
 {
-	if (field.IsFlashing())
+	if (!gameOver)
 	{
-		field.FlashFullRows(dt);
+		if (field.IsFlashing())
+		{
+			field.FlashFullRows(dt);
+		}
+		else
+		{
+			field.ShowOnField(*tetrimino);
+			moveTimePassed += dt;
+			if (moveTimePassed > fallingSpeed)
+			{
+				moveTimePassed = 0;
+				MoveTetriminoOrPlaceOnField();
+			}
+		}
 	}
 	else
 	{
-		field.ShowOnField(*tetrimino);
-		moveTimePassed += dt;
-		if (moveTimePassed > fallingSpeed)
+		if (!gameData->assets.SoundStillPlaying(GAMEOVER_SOUND))
 		{
-			moveTimePassed = 0;
-			MoveTetriminoOrPlaceOnField();
+			gameData->machine.AddState(std::make_unique<GameOverState>(gameData, currentScore));
 		}
 	}
 }
@@ -138,8 +152,9 @@ void GameState::MoveTetriminoOrPlaceOnField()
 		if (tetrimino->GetRow() == Tetrimino::StartingRow)
 		{
 			gameData->assets.StopMusic();
-			gameData->assets.PlaySoundTillEnd(GAMEOVER_SOUND);
-			gameData->machine.AddState(std::make_unique<GameOverState>(gameData, currentScore));
+			gameOver = true;
+			gameData->assets.PlaySound(GAMEOVER_SOUND);
+			return;
 		}
 		field.ClearFieldAndSaveLastPosition();
 		field.PlaceLastPositionOnField(tetrimino->GetColor());
@@ -288,5 +303,7 @@ void GameState::CopyTextBoxesAndOpenPauseState()
 	textBoxes.push_back(droughtTxtBox);
 	textBoxes.push_back(levelTxtBox);
 	gameData->machine.AddState(std::make_unique<PauseState>(gameData, field, textBoxes, preview), false);
-	//gameData->machine.AddState(std::make_unique<GameOverState>(gameData, 40), false);
+	/*gameData->assets.StopMusic();
+	gameData->assets.PlaySound(GAMEOVER_SOUND);
+	gameOver = true;*/
 }

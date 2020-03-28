@@ -1,12 +1,12 @@
 #pragma once
 #include "Game.h"
-#include "State.h"
+#include "IState.h"
 #include "Field.h"
 #include "TetriminoFactory.h"
 #include "TextBox.h"
 #include "Preview.h"
 
-class GameState : public State
+class GameState : public IState
 {
 public:
 	GameState(std::shared_ptr<GameData> _gameData);
@@ -43,7 +43,7 @@ private:
 	unsigned int linesCleared = 0;
 	unsigned int level = 1;
 	unsigned int droughtCount = 0;
-
+	bool gameOver = false;
 	float moveTimePassed = 0;
 	float fallingSpeed = startSpeed;
 	
