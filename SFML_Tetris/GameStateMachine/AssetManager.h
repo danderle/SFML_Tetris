@@ -19,7 +19,6 @@ public:
 	sf::SoundBuffer& GetSoundBuffer(std::string name);
 	sf::Sound& GetSound(std::string name);
 	void PlaySound(const std::string name);
-	void PlaySoundTillEnd(const std::string name) const;
 	const bool SoundStillPlaying(const std::string name) const;
 	void SetSoundsVolume(const float volume);
 	const bool SoundsOn() const;

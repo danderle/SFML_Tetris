@@ -56,25 +56,6 @@ void AssetManager::PlaySound(const std::string name)
 	sounds.at(name).play();
 }
 
-void AssetManager::PlaySoundTillEnd(const std::string name) const
-{
-	sf::Sound sound(sounds.at(name));
-	sound.play();
-	bool playing = true;
-	while (playing)
-	{
-		auto status = sound.getStatus();
-		switch (status)
-		{
-		case sf::Sound::Playing:
-			break;
-		default:
-			playing = false;
-			break;
-		}
-	}
-}
-
 const bool AssetManager::SoundStillPlaying(const std::string name) const
 {
 	auto status = sounds.at(name).getStatus();
