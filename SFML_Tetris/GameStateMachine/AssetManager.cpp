@@ -48,6 +48,74 @@ sf::SoundBuffer& AssetManager::GetSoundBuffer(std::string name)
 
 sf::Sound& AssetManager::GetSound(std::string name)
 {
-	sf::Sound sound;
 	return sounds.at(name);
+}
+
+void AssetManager::PlaySound(const std::string name)
+{
+	sounds.at(name).play();
+}
+
+void AssetManager::PlaySoundTillEnd(const std::string name) const
+{
+	sf::Sound sound(sounds.at(name));
+	sound.play();
+	bool playing = true;
+	while (playing)
+	{
+		auto status = sound.getStatus();
+		switch (status)
+		{
+		case sf::Sound::Playing:
+			break;
+		default:
+			playing = false;
+			break;
+		}
+	}
+}
+
+const bool AssetManager::SoundStillPlaying(const std::string name) const
+{
+	auto status = sounds.at(name).getStatus();
+	return status == sf::Sound::Playing;
+}
+
+void AssetManager::SetSoundsVolume(const float volume)
+{
+	soundsOn = volume > 0;
+	for (auto& sound : sounds)
+	{
+		sound.second.setVolume(volume);
+	}
+}
+
+const bool AssetManager::SoundsOn() const
+{
+	return soundsOn;
+}
+
+void AssetManager::StartMusic(std::string fileName)
+{
+	if (music.openFromFile(fileName))
+	{
+		music.setLoop(true);
+		music.play();
+	}
+}
+
+void AssetManager::StopMusic()
+{
+	music.stop();
+}
+
+void AssetManager::SetMusicVolume(const float volume)
+{
+	musicOn = volume > 0;
+	music.setVolume(volume);
+}
+
+const bool AssetManager::MusicOn() const
+{
+	return musicOn;
 }
