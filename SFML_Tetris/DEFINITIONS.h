@@ -11,6 +11,7 @@
 #define OUTLINE_THICKNESS -5
 
 #define SPLASH_SCREEN_PATH "Resources\\SplashScreenTetris.png"
+#define SPLASH_SCREEN "Splash"
 
 #define ROBOTO_FONT_PATH "Resources\\Roboto-Bold.ttf"
 #define ROBOT_FONT "Roboto"
@@ -35,6 +36,7 @@
 #define HIGHSCORE_PATH "HighScores.txt"
 
 #define RED sf::Color(255,0,0)
+#define DARKORANGE sf::Color(255,140,0)
 #define GREEN sf::Color(0,255,0)
 #define WHITE sf::Color(255,255,255)
 #define BLACK sf::Color(0,0,0)
