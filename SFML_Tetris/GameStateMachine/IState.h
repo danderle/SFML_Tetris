@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-class State
+class IState
 {
 public:
 	virtual void Init() = 0;
