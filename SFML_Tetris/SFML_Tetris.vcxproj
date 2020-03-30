@@ -153,6 +153,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="HighScores.cpp" />
     <ClCompile Include="States\SettingsState.cpp" />
     <ClCompile Include="States\GameOverState.cpp" />
     <ClCompile Include="GameStateMachine\AssetManager.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="DEFINITIONS.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GUI\IGuiElement.h" />
+    <ClInclude Include="HighScores.h" />
     <ClInclude Include="States\SettingsState.h" />
     <ClInclude Include="States\GameOverState.h" />
     <ClInclude Include="GameStateMachine\AssetManager.h" />

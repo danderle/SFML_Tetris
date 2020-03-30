@@ -72,6 +72,9 @@
     <ClCompile Include="States\SettingsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HighScores.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DEFINITIONS.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\IGuiElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScores.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
