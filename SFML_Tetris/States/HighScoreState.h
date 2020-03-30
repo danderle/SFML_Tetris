@@ -1,6 +1,7 @@
 #pragma once
 #include "IGuiElement.h"
 #include "Game.h"
+#include "HighScores.h"
 #include <sstream>
 #include <fstream>
 
@@ -21,16 +22,10 @@ private:
 	void CheckButtonHover() override;
 	void CheckButtonClick() override;
 	void SetGuiElementPositions() override;
-	void LoadHighScores();
-	void SetupHighScoreTexts(const sf::Font& font);
-
-protected:
-	std::shared_ptr<GameData> gameData;
-	std::vector<std::pair<std::string, unsigned int>> highScores;
-	std::vector<sf::Text> highScoreTexts;
 
 private:
+	std::shared_ptr<GameData> gameData;
 	Button backBtn;
-	sf::Text top10Text;
+	HighScores highScores;
 };
 
