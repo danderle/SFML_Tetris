@@ -17,7 +17,7 @@ public:
 private:
 	void SetupButtons(const sf::Font& font) override;
 	void CheckButtonHover() override;
-	void CheckButtonClick() override;
+	void CheckButtonClick(const sf::Event& event) override;
 	void SetGuiElementPositions() override;
 
 private:

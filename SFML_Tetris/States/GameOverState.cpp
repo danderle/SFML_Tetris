@@ -28,7 +28,6 @@ void GameOverState::Init()
 void GameOverState::HandleInput()
 {
 	CheckButtonHover();
-	CheckButtonClick();
 }
 
 void GameOverState::HandleInput(const sf::Event& event)
@@ -48,6 +47,10 @@ void GameOverState::HandleInput(const sf::Event& event)
 		{
 			highScores.AddCharToScoreHolder(event.key.code);
 		}
+	}
+	else
+	{
+		CheckButtonClick(event);
 	}
 }
 
@@ -88,12 +91,15 @@ void GameOverState::CheckButtonHover()
 	newGameBtn.MouseHoverEffect(gameData->input.IsHovering(newGameBtn.GetRect(), gameData->window));
 }
 
-void GameOverState::CheckButtonClick()
+void GameOverState::CheckButtonClick(const sf::Event& event)
 {
-	if (newGameBtn.IsEnabled() &&
-		gameData->input.IsRectClicked(newGameBtn.GetRect(), sf::Mouse::Left, gameData->window))
+	if (newGameBtn.IsEnabled())
 	{
-		gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
+		if (event.mouseButton.button == sf::Mouse::Left &&
+			gameData->input.IsRectClicked(newGameBtn.GetRect(), gameData->window))
+		{
+			gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
+		}
 	}
 }
 

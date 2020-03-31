@@ -54,14 +54,6 @@ void PauseState::SetupTextBoxes(const sf::Font& font)
 	pauseTxtBox.SetOutlineColor(BLACK, OUTLINE_THICKNESS);
 }
 
-void PauseState::CheckButtonHover()
-{
-}
-
-void PauseState::CheckButtonClick()
-{
-}
-
 void PauseState::SetGuiElementPositions()
 {
 	pauseTxtBox.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 });

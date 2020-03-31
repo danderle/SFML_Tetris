@@ -22,11 +22,11 @@ void MainMenuState::Init()
 void MainMenuState::HandleInput()
 {
 	CheckButtonHover();
-	CheckButtonClick();
 }
 
 void MainMenuState::HandleInput(const sf::Event& event)
 {
+	CheckButtonClick(event);
 }
 
 void MainMenuState::Update(float dt)
@@ -59,22 +59,22 @@ void MainMenuState::CheckButtonHover()
 	highScoresBtn.MouseHoverEffect(isHovering);
 }
 
-void MainMenuState::CheckButtonClick()
+void MainMenuState::CheckButtonClick(const sf::Event& event)
 {
-	bool isClicked = gameData->input.IsRectClicked(playButton.GetRect(), sf::Mouse::Left, gameData->window);
-	if (isClicked)
+	if (event.mouseButton.button == sf::Mouse::Left)
 	{
-		gameData->machine.AddState(std::make_unique<GameState>(gameData));
-	}
-	isClicked = gameData->input.IsRectClicked(settingsBtn.GetRect(), sf::Mouse::Left, gameData->window);
-	if (isClicked)
-	{
-		gameData->machine.AddState(std::make_unique<SettingsState>(gameData));
-	}
-	isClicked = gameData->input.IsRectClicked(highScoresBtn.GetRect(), sf::Mouse::Left, gameData->window);
-	if (isClicked)
-	{
-		gameData->machine.AddState(std::make_unique<HighScoreState>(gameData));
+		if (gameData->input.IsRectClicked(playButton.GetRect(), gameData->window))
+		{
+			gameData->machine.AddState(std::make_unique<GameState>(gameData));
+		}
+		else if (gameData->input.IsRectClicked(settingsBtn.GetRect(), gameData->window))
+		{
+			gameData->machine.AddState(std::make_unique<SettingsState>(gameData));
+		}
+		else if (gameData->input.IsRectClicked(highScoresBtn.GetRect(), gameData->window))
+		{
+			gameData->machine.AddState(std::make_unique<HighScoreState>(gameData));
+		}
 	}
 }
 

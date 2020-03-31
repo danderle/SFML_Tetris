@@ -111,6 +111,7 @@ void HighScores::SaveScoreHolder()
 		outStream << highScore.first << " " << std::to_string(highScore.second) << std::endl;
 	}
 	outStream.close();
+	isNewScore = false;
 }
 
 bool HighScores::IsNewScore() const

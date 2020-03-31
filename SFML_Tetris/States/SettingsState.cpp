@@ -20,7 +20,6 @@ void SettingsState::Init()
 void SettingsState::HandleInput()
 {
 	CheckButtonHover();
-	CheckButtonClick();
 }
 
 void SettingsState::HandleInput(const sf::Event& event)
@@ -70,32 +69,25 @@ void SettingsState::CheckButtonHover()
 	backBtn.MouseHoverEffect(isHovering);
 }
 
-void SettingsState::CheckButtonClick()
-{
-	bool isClicked = gameData->input.IsRectClicked(backBtn.GetRect(), sf::Mouse::Left, gameData->window);
-	if (isClicked)
-	{
-		gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
-	}
-}
-
 void SettingsState::CheckButtonClick(const sf::Event& event)
 {
 	if (event.mouseButton.button == sf::Mouse::Left)
 	{
-		bool isClicked = gameData->input.IsRectClicked(musicBtn.GetRect(), gameData->window);
-		if (isClicked)
+		if (gameData->input.IsRectClicked(musicBtn.GetRect(), gameData->window))
 		{
 			const float volume = gameData->assets.MusicOn() ? 0.f : 100.f;
 			gameData->assets.SetMusicVolume(volume);
 			SetButtonState(musicBtn, gameData->assets.MusicOn());
 		}
-		isClicked = gameData->input.IsRectClicked(soundBtn.GetRect(), gameData->window);
-		if (isClicked)
+		else if (gameData->input.IsRectClicked(soundBtn.GetRect(), gameData->window))
 		{
 			const float volume = gameData->assets.SoundsOn() ? 0.f : 100.f;
 			gameData->assets.SetSoundsVolume(volume);
 			SetButtonState(soundBtn, gameData->assets.SoundsOn());
+		}
+		else if (gameData->input.IsRectClicked(backBtn.GetRect(), gameData->window))
+		{
+			gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
 		}
 	}
 }

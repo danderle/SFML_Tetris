@@ -17,8 +17,6 @@ public:
 
 private:
 	void SetupTextBoxes(const sf::Font& font) override;
-	void CheckButtonHover() override;
-	void CheckButtonClick() override;
 	void SetGuiElementPositions() override;
 
 private:

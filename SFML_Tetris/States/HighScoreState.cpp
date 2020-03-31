@@ -20,11 +20,11 @@ void HighScoreState::Init()
 void HighScoreState::HandleInput()
 {
 	CheckButtonHover();
-	CheckButtonClick();
 }
 
 void HighScoreState::HandleInput(const sf::Event& event)
 {
+	CheckButtonClick(event);
 }
 
 void HighScoreState::Update(float dt)
@@ -46,12 +46,14 @@ void HighScoreState::CheckButtonHover()
 	backBtn.MouseHoverEffect(isHovering);
 }
 
-void HighScoreState::CheckButtonClick()
+void HighScoreState::CheckButtonClick(const sf::Event& event)
 {
-	bool isClicked = gameData->input.IsRectClicked(backBtn.GetRect(), sf::Mouse::Left, gameData->window);
-	if (isClicked)
+	if (event.mouseButton.button == sf::Mouse::Left)
 	{
-		gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
+		if (gameData->input.IsRectClicked(backBtn.GetRect(), gameData->window))
+		{
+			gameData->machine.AddState(std::make_unique<MainMenuState>(gameData));
+		}
 	}
 }
 
