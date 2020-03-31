@@ -65,5 +65,4 @@ void Game::LoadAssets()
 	gameData->assets.LoadSound(LINE_SOUND, LINE_SOUND_PATH);
 	gameData->assets.LoadSound(TETRIS_SOUND, TETRIS_SOUND_PATH);
 	gameData->assets.LoadSound(SPLASH_SOUND, SPLASH_SOUND_PATH);
-	//gameData->assets.LoadSound(THEME_SOUND, THEME_SOUND_PATH);
 }

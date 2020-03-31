@@ -78,11 +78,7 @@ void GameOverState::SetupButtons(const sf::Font& font)
 
 void GameOverState::SetupTextBoxes(const sf::Font& font)
 {
-	gameOverTxtBox.SetFont(font, CHARACTER_SIZE);
-	gameOverTxtBox.SetContent("GAME OVER", Alignment::CENTER);
-	gameOverTxtBox.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 });
-	gameOverTxtBox.SetTextColor(BLACK);
-	gameOverTxtBox.SetOutlineColor(BLACK, OUTLINE_THICKNESS);
+	gameOverTxtBox.SetTemplate(font, "Game Over");
 }
 
 
@@ -105,6 +101,8 @@ void GameOverState::CheckButtonClick(const sf::Event& event)
 
 void GameOverState::SetGuiElementPositions()
 {
+	gameOverTxtBox.SetCenterAt({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 });
+	
 	highScores.SetGuiElementPositions();
 
 	float padding = 20.f;

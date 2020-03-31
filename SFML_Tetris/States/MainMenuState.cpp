@@ -88,5 +88,4 @@ void MainMenuState::SetGuiElementPositions()
 
 	previousBtnPos = settingsBtn.GetPosition();
 	highScoresBtn.SetPosition(previousBtnPos.x, previousBtnPos.y + settingsBtn.GetRect().height + margin);
-
 }
