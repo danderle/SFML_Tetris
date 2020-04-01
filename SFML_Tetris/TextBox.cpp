@@ -121,7 +121,7 @@ const sf::Vector2f TextBox::GetPosition() const
 void TextBox::SetTemplate(const sf::Font& font, const std::string content)
 {
 	SetFont(font, CHARACTER_SIZE);
-	SetTextColor(GREEN);
+	SetTextColor(BLACK);
 	SetOutlineColor(GREEN, OUTLINE_THICKNESS);
 	SetContent(content, Alignment::CENTER);
 }
