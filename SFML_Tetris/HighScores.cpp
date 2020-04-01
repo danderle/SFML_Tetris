@@ -4,7 +4,7 @@ void HighScores::Load()
 {
 	std::ifstream inputStream(HIGHSCORE_PATH);
 	std::string line;
-	while (std::getline(inputStream, line).good() && !line.empty())
+	while (std::getline(inputStream, line).good() && !line.empty() && highScores.size() < 10)
 	{
 		std::stringstream ss;
 		ss << line;
