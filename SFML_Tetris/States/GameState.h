@@ -1,12 +1,13 @@
 #pragma once
 #include "Game.h"
 #include "IState.h"
+#include "IGuiElement.h"
 #include "Field.h"
 #include "TetriminoFactory.h"
 #include "TextBox.h"
 #include "Preview.h"
 
-class GameState : public IState
+class GameState : public IState, public IGuiElement
 {
 public:
 	GameState(std::shared_ptr<GameData> _gameData);
@@ -26,6 +27,8 @@ private:
 	void GetNextTetrimino();
 	void CreateNextTetrimino();
 	void CopyTextBoxesAndOpenPauseState();
+
+	void SetGuiElementPositions() override;
 
 private:
 	std::shared_ptr<GameData> gameData;
