@@ -17,8 +17,8 @@ public:
 private:
 	std::stack<std::unique_ptr<IState>> states;
 	std::unique_ptr<IState> newState;
-	bool isRemoving;
-	bool isAdding;
-	bool isReplacing;
+	bool isRemoving = false;
+	bool isAdding = false;
+	bool isReplacing = false;
 };
 
