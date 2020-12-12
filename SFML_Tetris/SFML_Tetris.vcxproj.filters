@@ -75,6 +75,9 @@
     <ClCompile Include="HighScores.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DEFINITIONS.h">
@@ -141,6 +144,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HighScores.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
