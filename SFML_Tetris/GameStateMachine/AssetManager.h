@@ -12,6 +12,9 @@ public:
 	void LoadTexture(std::string name, std::string fileName);
 	sf::Texture& GetTexture(std::string name);
 
+	void LoadImage(std::string name, std::string fileName);
+	sf::Image& GetImage(std::string name);
+
 	void LoadFont(std::string name, std::string fileName);
 	sf::Font& GetFont(std::string name);
 
@@ -29,6 +32,7 @@ public:
 
 private:
 	std::map<std::string, sf::Texture> textures;
+	std::map<std::string, sf::Image> images;
 	std::map<std::string, sf::Font> fonts;
 	std::map<std::string, sf::SoundBuffer> soundbuffers;
 	std::map<std::string, sf::Sound> sounds;

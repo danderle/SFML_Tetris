@@ -14,6 +14,20 @@ sf::Texture& AssetManager::GetTexture(std::string name)
 	return textures.at(name);
 }
 
+void AssetManager::LoadImage(std::string name, std::string fileName)
+{
+	sf::Image image;
+	if (image.loadFromFile(fileName))
+	{
+		images.insert({ name, image});
+	}
+}
+
+sf::Image& AssetManager::GetImage(std::string name)
+{
+	return images.at(name);
+}
+
 void AssetManager::LoadFont(std::string name, std::string fileName)
 {
 	sf::Font font;
