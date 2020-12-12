@@ -10,12 +10,15 @@
 #define CHARACTER_SIZE 40
 #define OUTLINE_THICKNESS -5
 
-#define SPLASH_SCREEN_PATH "Resources\\SplashScreenTetris.png"
+#define SPLASH_SCREEN_PATH "Resources\\Images\\SplashScreenTetris.png"
 #define SPLASH_SCREEN "Splash"
 
-#define ROBOTO_FONT_PATH "Resources\\Roboto-Bold.ttf"
+#define WINDOW_ICON_PATH "Resources\\Images\\Tetris.png"
+#define WINDOW_ICON "TetrisIcon"
+
+#define ROBOTO_FONT_PATH "Resources\\Fonts\\Roboto-Bold.ttf"
 #define ROBOT_FONT "Roboto"
-#define UNISPACE_FONT_PATH "Resources\\Unispace-Rg.ttf"
+#define UNISPACE_FONT_PATH "Resources\\Fonts\\Unispace-Rg.ttf"
 #define UNISPACE_FONT "Unispace"
 
 #define TETRIS_SOUND_PATH "Resources\\Sounds\\Tetris.wav"
@@ -32,8 +35,6 @@
 #define SPLASH_SOUND "SplashScreenSound"
 #define THEME_SOUND_PATH "Resources\\Sounds\\Theme.ogg"
 #define THEME_SOUND "Theme"
-
-#define HIGHSCORE_PATH "HighScores.txt"
 
 #define RED sf::Color(255,0,0)
 #define DARKORANGE sf::Color(255,140,0)
