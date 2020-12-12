@@ -9,7 +9,6 @@ SplashState::SplashState(std::shared_ptr<GameData> _gameData)
 
 void SplashState::Init()
 {
-	gameData->assets.LoadTexture(SPLASH_SCREEN, SPLASH_SCREEN_PATH);
 	splashScreenSprite.setTexture(gameData->assets.GetTexture(SPLASH_SCREEN));
 	float width = splashScreenSprite.getGlobalBounds().width;
 	float height = splashScreenSprite.getGlobalBounds().height;

@@ -3,8 +3,9 @@
 
 Game::Game()
 {
-	BasicSetup();
 	LoadAssets();
+	BasicSetup();
+
 	gameData->machine.AddState(std::make_unique<SplashState>(gameData));
 }
 
@@ -54,6 +55,14 @@ void Game::BasicSetup()
 	gameData->window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), TITLE,
 		sf::Style::Close | sf::Style::Titlebar);
 	gameData->window.setVerticalSyncEnabled(true);
+
+	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+	gameData->window.setPosition({ (int)desktop.width / 2 - (int)gameData->window.getSize().x / 2, 0 });
+	icon = gameData->assets.GetImage(WINDOW_ICON);
+	sf::Vector2u iconSize = icon.getSize();
+	gameData->window.setIcon(iconSize.x, iconSize.y, icon.getPixelsPtr());
+
+	FileHandler::CreateAppDataDirectory();
 }
 
 void Game::LoadAssets()
@@ -65,4 +74,6 @@ void Game::LoadAssets()
 	gameData->assets.LoadSound(LINE_SOUND, LINE_SOUND_PATH);
 	gameData->assets.LoadSound(TETRIS_SOUND, TETRIS_SOUND_PATH);
 	gameData->assets.LoadSound(SPLASH_SOUND, SPLASH_SOUND_PATH);
+	gameData->assets.LoadTexture(SPLASH_SCREEN, SPLASH_SCREEN_PATH);
+	gameData->assets.LoadImage(WINDOW_ICON, WINDOW_ICON_PATH);
 }
